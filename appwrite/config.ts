@@ -106,6 +106,17 @@ export class AppwriteService {
       console.log(error);
     }
   }
+  async getBrandWebStoreKey(address: string) {
+    try {
+      return database.listDocuments(
+        conf.appwriteDatabaseId,
+        conf.appwriteBrandId,
+        [Query.equal("publicKey", address)]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async getInfluencerData(key: string) {
     try {

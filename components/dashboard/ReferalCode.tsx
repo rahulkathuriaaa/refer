@@ -5,27 +5,43 @@ import Link from "next/link";
 import Image from "next/image";
 import { generateDiscountCode } from "../../utils";
 import { useBrandData } from "@/store";
-const ReferalCode = () => {
-  const shopifyToken = useBrandData.getState().api_key
-  const shopifyStore = useBrandData.getState().website
+import appwriteService from "@/appwrite/config";
+const ReferalCode = (address) => {
   const [isOpen, setIsOpen] = useState(false);
   const [code, setCode] = useState("Generating ..");
 
-  const togglePopup = () => {
-    handleCodeGeneration()
+  const togglePopup = async () => {
+    console.log(address.address);
+    const { shopifyToken, shopifyStore } = await webStoreData();
+    console.log("data passed to handle gen code ", shopifyStore, shopifyToken);
+    handleCodeGeneration(shopifyToken, shopifyStore);
     setIsOpen(!isOpen);
   };
 
-  const handleCodeGeneration = async () => {
-    const res = await generateDiscountCode(20, "ll",shopifyToken,shopifyStore);
+  const handleCodeGeneration = async (shopifyToken, shopifyStore) => {
+    const res = await generateDiscountCode(
+      20,
+      "ll",
+      shopifyToken,
+      shopifyStore
+    );
     setCode(res.code);
+  };
+  const webStoreData = async () => {
+    const res = await appwriteService.getBrandWebStoreKey(address.address);
+    console.log(res.documents[0].api_key);
+    const data = {
+      shopifyToken: res.documents[0].api_key,
+      shopifyStore: res.documents[0].website,
+    }; //api_key website
+    return data;
   };
 
   return (
     <div className="">
       <button
         onClick={() => {
-           togglePopup();
+          togglePopup();
         }}
         className="px-4 py-2 border rounded-lg"
       >

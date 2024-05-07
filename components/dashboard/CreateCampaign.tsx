@@ -71,7 +71,7 @@ function CreateCampaign() {
       campaignAmount,
       campaignClaimRate,
     ];
-    const signer = await getSigner();
+    const signer = await getSigner2();
     console.log(signer);
 
     const contract = new ethers.Contract(
@@ -92,7 +92,7 @@ function CreateCampaign() {
     // const functionArguments = [13];
     const provider = await getProvider();
 
-    const signer = await getSigner();
+    const signer = await getSigner2();
     console.log(signer);
     console.log(provider);
     const readContract = new ethers.Contract(

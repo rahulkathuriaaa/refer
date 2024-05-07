@@ -108,7 +108,7 @@ const CardsWhitelistInfluencer = ({
     const campaignId = await getCampaignId();
     const functionName = "whitelistUsers";
     const functionArguments = [campaignId, influencerAddress];
-    const signer = await getSigner();
+    const signer = await getSigner2();
 
     const contract = new ethers.Contract(
       referFactoryContractAddress,
@@ -157,9 +157,8 @@ const CardsWhitelistInfluencer = ({
     };
     const res2 = async () => {
       const res2 = await isEligibleToClaim();
-      console.log(res2)
+      console.log(res2);
       setIsInfluencerEligibleToClaim(res2);
-
     };
 
     res();
@@ -195,17 +194,16 @@ const CardsWhitelistInfluencer = ({
             <div>
               {isInfluencerEligibleToClaim ? (
                 <button
-                onClick={() => {
-                  makeInfluencerEligibleToClaim();
-                }}
+                  onClick={() => {
+                    makeInfluencerEligibleToClaim();
+                  }}
                   className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]"
                 >
                   Make Eligible To claim
                 </button>
               ) : (
-                <button 
-                className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]">
-                   Eligible To Claim
+                <button className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]">
+                  Eligible To Claim
                 </button>
               )}
             </div>

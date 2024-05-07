@@ -134,7 +134,7 @@ const CardsActiveCampaigns = ({
               Whitelist Influencer
             </button>
           ) : (
-            <ReferalCode ></ReferalCode>
+            <ReferalCode address={address}></ReferalCode>
           )}
           <button
             className={`text-[#27E0A6]`}

@@ -60,7 +60,7 @@ export async function POST(req, res) {
     };
 
     const response = await shop.discountCode.create(
-      getPricerule(),
+      await getPricerule(),
       discountCodeData
     );
     console.log(response);
