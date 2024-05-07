@@ -108,7 +108,7 @@ const CardsWhitelistInfluencer = ({
     const campaignId = await getCampaignId();
     const functionName = "whitelistUsers";
     const functionArguments = [campaignId, influencerAddress];
-    const signer = await getSigner2();
+    const signer = await getSigner();
 
     const contract = new ethers.Contract(
       referFactoryContractAddress,
