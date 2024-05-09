@@ -29,7 +29,8 @@ export const counterContractAbi = [
     type: "function",
   },
 ];
-
+//pa 0xCFeC6fC50cce2baf56FEb2A19bBBeCCE6BDb7416
+// as 0xA0806AF1533246BA9Db92F2CfAd3b013251F94C5
 export const tokenContractAddress =
   "0xA0806AF1533246BA9Db92F2CfAd3b013251F94C5";
 export const tokenContractAbi = [
@@ -360,7 +361,8 @@ export const tokenContractAbi = [
     type: "function",
   },
 ];
-
+// pa 0xce76F502cE90fdb53983134f23EF3228777747D1
+// as 0x9Dde0dbD80114F5912eb7A6147253C091E404864
 export const referFactoryContractAddress =
   "0x9Dde0dbD80114F5912eb7A6147253C091E404864";
 export const referFactoryContractAbi = [

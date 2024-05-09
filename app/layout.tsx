@@ -29,7 +29,7 @@ export default function RootLayout({
             environmentId: process.env.DYNAMIC_PROJECT_ID || "",
             walletConnectors: [
               EthereumWalletConnectors,
-              ZeroDevSmartWalletConnectors,
+              
             ],
             walletConnectorExtensions: [EthersExtension],
           }}

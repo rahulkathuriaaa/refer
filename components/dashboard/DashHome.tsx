@@ -61,7 +61,7 @@ const DashHome = () => {
 
   const { user } = useDynamicContext();
   if (loading == true) return <>Fetching....</>;
-  const walletAddress = user?.verifiedCredentials[1].address;
+  const walletAddress = user?.verifiedCredentials[0].address;
   return (
     <div className="flex w-[98%] py-4">
       <div className="flex flex-col justify-center items-center gap-8 w-full">

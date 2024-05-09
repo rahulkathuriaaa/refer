@@ -11,9 +11,9 @@ function ActiveCampaigns(campaigns: any) {
       {campaigns.campaigns.map((campaign, index) => (
         <CardsActiveCampaigns
           key={index}
-          address={campaign[0]}
-          campaign={campaign[4]}
-          campaigndesc={campaign[5]}
+          address={campaign._contract}
+          campaign={campaign.name}
+          campaigndesc={campaign.description}
           // number={"30"}
           balance={"20"}
           total={"200"}

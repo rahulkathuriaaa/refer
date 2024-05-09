@@ -15,7 +15,7 @@ function InfluencerSetup1() {
     useInfluencerData.setState({
       name: name,
       bio: bio,
-      publicKey:user?.verifiedCredentials[1].address,
+      publicKey:user?.verifiedCredentials[0].address,
     });
   }
   return (

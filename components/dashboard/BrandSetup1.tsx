@@ -21,7 +21,7 @@ function BrandSetup1() {
       website: brandWebsite,
       address: brandAddress,
       business_reg_code: brandRegistrationCode,
-      publicKey: user?.verifiedCredentials[1].address,
+      publicKey: user?.verifiedCredentials[0].address,
     });
     console.log("store Updated 1");
   }

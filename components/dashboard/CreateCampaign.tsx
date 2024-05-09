@@ -13,9 +13,17 @@ import {
   WalletClient,
   PublicClient,
   parseEther,
+  readContract,
+  getContract,
 } from "viem";
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { useEmbeddedWallet } from "@dynamic-labs/sdk-react-core";
 import {
   counterContractAbi,
   counterContractAddress,
@@ -34,15 +42,16 @@ function CreateCampaign() {
   let allowedAmount = 1;
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
-  const walletAddress = user?.verifiedCredentials[1].address;
+  const walletAddress = user?.verifiedCredentials[0].address;
   const isInfluencer = useIsInfluencer.getState().isInfluencer;
-
-  console.log("user wallet", walletAddress);
+  console.log("wallet ", walletAddress);
   const getSigner = async () => {
-    return await primaryWallet?.connector.ethers?.getSigner();
+    return await primaryWallet.connector.getSigner<
+      WalletClient<Transport, Chain, Account>
+    >();
   };
   const getProvider = async () => {
-    return await primaryWallet?.connector.ethers?.getWeb3Provider();
+    return await primaryWallet.connector.getPublicClient<PublicClient>();
   };
   const getSigner2 = async () => {
     if (typeof window.ethereum !== "undefined") {
@@ -71,7 +80,8 @@ function CreateCampaign() {
       campaignAmount,
       campaignClaimRate,
     ];
-    const signer = await getSigner2();
+    console.log(functionArguments);
+    const signer = await getSigner();
     console.log(signer);
 
     const contract = new ethers.Contract(
@@ -81,6 +91,14 @@ function CreateCampaign() {
     );
     try {
       const tx = await contract[functionName](...functionArguments);
+      // const tx = await contract.createCampaign(
+      //   campaignName,
+      //   campaignDesc,
+      //   campaignTerm,
+      //   campaignAmount,
+      //   campaignClaimRate,
+      //   { gasLimit: 10000000 }
+      // );
       await tx.wait();
       return tx.hash;
     } catch (error) {
@@ -92,7 +110,7 @@ function CreateCampaign() {
     // const functionArguments = [13];
     const provider = await getProvider();
 
-    const signer = await getSigner2();
+    const signer = await getSigner();
     console.log(signer);
     console.log(provider);
     const readContract = new ethers.Contract(
@@ -155,6 +173,51 @@ function CreateCampaign() {
       console.error("Transaction failed:", error);
       return false;
     }
+  };
+
+  const readFromContract = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const signer = await getSigner();
+    console.log(signer);
+
+    try {
+      const data = await signer.writeContract({
+        address: referFactoryContractAddress,
+        abi: referFactoryContractAbi,
+        functionName: "createCampaign",
+        args: [
+          campaignName,
+          campaignDesc,
+          campaignTerm,
+          campaignAmount,
+          campaignClaimRate,
+        ],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error reading brand campaigns", error);
+    }
+
+    // try {
+    //   const data = await readContract({
+    //     address: contractAddress as Hex,
+    //     abi: abi,
+    //     functionName: functionName,
+    //     args: [argument],
+    //     publicClient: client,
+    //   });
+    //   console.log(data);
+    //   return data;
+    // } catch (error) {
+    //   console.error("Error reading from contract:", error);
+    //   throw error;
+    // }
   };
   return (
     <>
@@ -235,7 +298,7 @@ function CreateCampaign() {
 
           <button
             onClick={async () => {
-              const res = await handleCreateCampaign();
+              const res = await readFromContract();
               console.log(res);
             }}
             className="py-3 bg-[#00B24F] text-white text-sm text-center w-[35%] rounded-lg cursor-pointer"

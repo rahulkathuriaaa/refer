@@ -8,13 +8,23 @@ import { ethers } from "ethers";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useIsInfluencer } from "@/store";
 import {
-  counterContractAbi,
-  counterContractAddress,
   tokenContractAbi,
   tokenContractAddress,
   referFactoryContractAddress,
   referFactoryContractAbi,
 } from "@/ethers/contractConfig";
+import {
+  Account,
+  Chain,
+  Hex,
+  Transport,
+  WalletClient,
+  PublicClient,
+  parseEther,
+  readContract,
+  getContract,
+} from "viem";
+import { getChain } from "@dynamic-labs/utils";
 
 const Campaigns = () => {
   const [choose, setChoose] = useState(false);
@@ -23,14 +33,16 @@ const Campaigns = () => {
 
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
-  const walletAddress = user?.verifiedCredentials[1].address;
+  const walletAddress = user?.verifiedCredentials[0].address;
   const isInfluencer = useIsInfluencer.getState().isInfluencer;
   console.log("wallet ", walletAddress);
   const getSigner = async () => {
-    return await primaryWallet?.connector.ethers?.getSigner();
+    return await primaryWallet.connector.getSigner<
+      WalletClient<Transport, Chain, Account>
+    >();
   };
   const getProvider = async () => {
-    return await primaryWallet?.connector.ethers?.getWeb3Provider();
+    return await primaryWallet.connector.getPublicClient<PublicClient>();
   };
   const getSigner2 = async () => {
     if (typeof window.ethereum !== "undefined") {
@@ -50,8 +62,85 @@ const Campaigns = () => {
   };
 
   const getBrandCampaigns = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
     const provider = await getProvider();
-    //  console.log(provider);
+    console.log(provider);
+
+    try {
+      const data = await provider.readContract({
+        address: referFactoryContractAddress,
+        abi: referFactoryContractAbi,
+        functionName: "fetchBrandCampaign",
+        args: [walletAddress],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error reading brand campaigns", error);
+    }
+
+    // try {
+    //   const data = await readContract({
+    //     address: contractAddress as Hex,
+    //     abi: abi,
+    //     functionName: functionName,
+    //     args: [argument],
+    //     publicClient: client,
+    //   });
+    //   console.log(data);
+    //   return data;
+    // } catch (error) {
+    //   console.error("Error reading from contract:", error);
+    //   throw error;
+    // }
+  };
+  const getJoinedCampaigns = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const provider = await getProvider();
+    console.log(provider);
+
+    try {
+      const data = await provider.readContract({
+        address: referFactoryContractAddress,
+        abi: referFactoryContractAbi,
+        functionName: "fetchJoinedCampaign",
+        args: [walletAddress],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error reading joined campaigns", error);
+    }
+
+    // try {
+    //   const data = await readContract({
+    //     address: contractAddress as Hex,
+    //     abi: abi,
+    //     functionName: functionName,
+    //     args: [argument],
+    //     publicClient: client,
+    //   });
+    //   console.log(data);
+    //   return data;
+    // } catch (error) {
+    //   console.error("Error reading from contract:", error);
+    //   throw error;
+    // }
+  };
+
+  const getBrandCampaignsT = async () => {
+    const provider = await getProvider();
+    console.log(provider);
     const contract = new ethers.Contract(
       referFactoryContractAddress,
       referFactoryContractAbi,
@@ -69,7 +158,7 @@ const Campaigns = () => {
       return false;
     }
   };
-  const getJoinedCampaigns = async () => {
+  const getJoinedCampaignsT = async () => {
     const provider = await getProvider();
     //  console.log(provider);
     const contract = new ethers.Contract(
@@ -88,6 +177,94 @@ const Campaigns = () => {
     }
   };
 
+  const approveReferSpender = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const signer = await getSigner();
+    console.log(signer);
+
+    try {
+      const data = await signer.writeContract({
+        address: tokenContractAddress,
+        abi: tokenContractAbi,
+        functionName: "approve",
+        args: [
+          referFactoryContractAddress,
+          ethers.utils.parseUnits("6000", 18), // Convert the amount to wei
+        ],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error approving refercontract as spender", error);
+    }
+
+    // try {
+    //   const data = await readContract({
+    //     address: contractAddress as Hex,
+    //     abi: abi,
+    //     functionName: functionName,
+    //     args: [argument],
+    //     publicClient: client,
+    //   });
+    //   console.log(data);
+    //   return data;
+    // } catch (error) {
+    //   console.error("Error reading from contract:", error);
+    //   throw error;
+    // }
+  };
+  const mintReferToken = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const signer = await getSigner();
+    console.log(signer);
+
+    try {
+      const data = await signer.writeContract({
+        address: tokenContractAddress,
+        abi: tokenContractAbi,
+        functionName: "mintTo",
+        args: [
+          walletAddress, // Convert the amount to wei
+        ],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error minting refer tokens", error);
+    }
+
+    // try {
+    //   const data = await readContract({
+    //     address: contractAddress as Hex,
+    //     abi: abi,
+    //     functionName: functionName,
+    //     args: [argument],
+    //     publicClient: client,
+    //   });
+    //   console.log(data);
+    //   return data;
+    // } catch (error) {
+    //   console.error("Error reading from contract:", error);
+    //   throw error;
+    // }
+  };
+  const handleMintAndApprove = async () => {
+    const res1 = await approveReferSpender();
+    const res2 = await mintReferToken();
+    console.log(res1);
+    console.log(res2);
+  };
+
   useEffect(() => {
     const fetchCampaigns = async () => {
       if (isInfluencer) {
@@ -98,7 +275,7 @@ const Campaigns = () => {
         setAllCampaigns(allCampaigns);
       }
     };
-
+    //readFromContract();
     fetchCampaigns();
   }, []);
 
@@ -112,6 +289,14 @@ const Campaigns = () => {
         {!isInfluencer ? (
           <div className="flex justify-between items-center">
             <p className="text-5xl font-semibold text-white">Campaigns</p>
+            <button
+              className="py-2 px-3 bg-[#00B24F] text-white text-sm rounded-lg cursor-pointer"
+              onClick={() => {
+                handleMintAndApprove()
+              }}
+            >
+              Get Test Tokens
+            </button>
             <button
               className="py-2 px-3 bg-[#00B24F] text-white text-sm rounded-lg cursor-pointer"
               onClick={() => {
