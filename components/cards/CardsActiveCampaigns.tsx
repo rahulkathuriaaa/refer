@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useIsInfluencer } from "@/store";
 import ReferalCode from "@/components/dashboard/ReferalCode";
+import ClaimTokens from "@/components/dashboard/ClaimTokens";
 
 import {
   counterContractAbi,
@@ -21,6 +22,7 @@ import appwriteService from "@/appwrite/config";
 
 const CardsActiveCampaigns = ({
   address,
+  contractAddress,
   campaign,
   campaigndesc,
   // number,
@@ -28,6 +30,7 @@ const CardsActiveCampaigns = ({
   total,
 }: {
   address: string;
+  contractAddress: string;
   campaign: string;
   campaigndesc: string;
   // number: any;
@@ -40,12 +43,82 @@ const CardsActiveCampaigns = ({
   const [remainingBalance, setRemainingBalance] = useState();
   const [allBrands, setAllBrands] = useState();
   const [allInfluencers, setAllInfluencers] = useState();
-  const isInfluencer = useIsInfluencer.getState().isInfluencer;
+  const [isInfluencerEligibleToClaim, setIsInfluencerEligibleToClaim] =
+    useState(false);
+
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
-
+  const walletAddress = user?.verifiedCredentials[0].address;
+  const isInfluencer = useIsInfluencer.getState().isInfluencer;
+  //console.log("wallet ", walletAddress);
+  const getSigner = async () => {
+    return await primaryWallet.connector.getSigner<
+      WalletClient<Transport, Chain, Account>
+    >();
+  };
   const getProvider = async () => {
-    return await primaryWallet?.connector.ethers?.getWeb3Provider();
+    return await primaryWallet.connector.getPublicClient<PublicClient>();
+  };
+  const isEligibleToClaim = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const provider = await getProvider();
+    console.log(provider);
+
+    try {
+      const data = await provider.readContract({
+        address: contractAddress,
+        abi: campaignContractAbi,
+        functionName: "isEligibleToClaim",
+        args: [walletAddress],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log("error getting if eligible to claim ", error);
+    }
+  };
+
+  const getAmountData = async () => {
+    console.log("test log");
+    console.log("campaign data 1", contractAddress);
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      // console.log(primaryWallet);
+    }
+
+    const provider = await getProvider();
+    console.log(provider);
+
+    try {
+      const data = await provider.readContract({
+        address: contractAddress,
+        abi: campaignContractAbi,
+        functionName: "getTotalEscrowAmount",
+      });
+      console.log(data);
+      setTotalBalence(Number(String(data)));
+      // return data;
+    } catch (error) {
+      console.log("error getting if eligible to claim ", error);
+    }
+    try {
+      const data = await provider.readContract({
+        address: contractAddress,
+        abi: campaignContractAbi,
+        functionName: "getRemainingEscrowAmount",
+      });
+      console.log(data);
+      setRemainingBalance(Number(String(data)));
+      // return data;
+    } catch (error) {
+      console.log("error getting if eligible to claim ", error);
+    }
   };
   async function updateAllUsersData() {
     const allBrands = await appwriteService.getAllBrands();
@@ -56,36 +129,13 @@ const CardsActiveCampaigns = ({
     console.log(allInfluencers?.documents);
   }
 
-  const getAmountData = async () => {
-    const provider = await getProvider();
-    //  console.log(provider);
-    const contract = new ethers.Contract(
-      address,
-      campaignContractAbi,
-      provider
-    );
-    try {
-      const tx = await contract.getTotalEscrowAmount();
-      //await tx.wait();
-      console.log(Number(String(tx)));
-      setTotalBalence(Number(String(tx)));
-    } catch (error) {
-      console.error("Total amount fetch error:", error);
-      return false;
-    }
-    try {
-      const tx = await contract.getRemainingEscrowAmount();
-      //await tx.wait();
-      console.log(Number(String(tx)));
-      setRemainingBalance(Number(String(tx)));
-    } catch (error) {
-      console.error("Remaining amount fetch erro:", error);
-      return false;
-    }
-  };
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAmountData();
+      const isEligible = await isEligibleToClaim();
+      console.log(isEligible)
+      setIsInfluencerEligibleToClaim(isEligible);
+      console.log(data);
       updateAllUsersData();
     };
 
@@ -124,6 +174,11 @@ const CardsActiveCampaigns = ({
           </div>
         </div>
         <div className="flex items-center gap-6">
+        {!isInfluencerEligibleToClaim ? (
+            <></>
+          ) : (
+            <ClaimTokens campaignAddress={contractAddress}></ClaimTokens>
+          )}
           {!isInfluencer ? (
             <button
               className={`text-[#27E0A6]`}
@@ -136,25 +191,20 @@ const CardsActiveCampaigns = ({
           ) : (
             <ReferalCode address={address}></ReferalCode>
           )}
-          <button
-            className={`text-[#27E0A6]`}
-            onClick={() => {
-              setView(false);
-            }}
-          >
-            View Campaign
-          </button>
+          
+
+          {view ? "" : <ClaimTokens></ClaimTokens>}
+          {whitelist ? (
+            ""
+          ) : (
+            <WhitelistInfluencer
+              allInfluencers={allInfluencers}
+              camapignAddresses={contractAddress}
+              remainingBalance={remainingBalance}
+            />
+          )}
         </div>
       </div>
-      {view ? "" : <ViewCampaign />}
-      {whitelist ? (
-        ""
-      ) : (
-        <WhitelistInfluencer
-          addresses={allInfluencers}
-          camapignAddresses={address}
-        />
-      )}
     </div>
   );
 };

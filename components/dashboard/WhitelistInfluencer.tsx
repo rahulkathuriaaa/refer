@@ -3,13 +3,17 @@ import React from "react";
 import Image from "next/image";
 import CardsWhitelistInfluencer from "../cards/CardsWhitelistInfluencer";
 
-function WhitelistInfluencer(
-  addresses = addresses,
-  camapignAddresses = camapignAddresses
-) {
+function WhitelistInfluencer({
+  allInfluencers,
+  camapignAddresses,
+  remainingBalance,
+}) {
   console.log("from whilelist page");
-//  console.log(addresses.addresses.documents[0].name);
-  console.log(addresses.camapignAddresses);
+  //  console.log(addresses.addresses.documents[0].name);
+  //console.log(addresses.documents);
+  console.log(allInfluencers);
+  console.log("remaining balance is ", remainingBalance);
+  allInfluencers?.documents.map((infAdd) => console.log(infAdd.publicKey));
 
   return (
     <>
@@ -63,16 +67,18 @@ function WhitelistInfluencer(
               <div className="">
                 <p className="text-gray-400 font-semibold">
                   Remaining Budget -{" "}
-                  <span className="text-white text-lg font-semibold">$100</span>
+                  <span className="text-white text-lg font-semibold">
+                    ${remainingBalance}
+                  </span>
                 </p>
               </div>
             </div>
-            {addresses?.addresses?.documents.map((infAdd) => (
-              <div key={infAdd}>
+            {allInfluencers?.documents.map((infAdd) => (
+              <div key={infAdd.publicKey}>
                 {
                   <CardsWhitelistInfluencer
-                    key={infAdd}
-                    campaignAddress={addresses.camapignAddresses}
+                    key={infAdd.publicKey}
+                    campaignAddress={camapignAddresses}
                     influencerAddress={infAdd.publicKey}
                     image={"/icons/ProfileIcon.svg"}
                     name={infAdd.name}

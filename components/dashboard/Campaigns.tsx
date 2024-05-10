@@ -30,6 +30,7 @@ const Campaigns = () => {
   const [choose, setChoose] = useState(false);
   const [create, setCreate] = useState(true);
   const [allCampaigns, setAllCampaigns] = useState([]);
+  const [referTokenBalance, setReferTokenBalance] = useState("Loading ...");
 
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
@@ -258,17 +259,62 @@ const Campaigns = () => {
     //   throw error;
     // }
   };
+  const getReferTokenBalance = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const provider = await getProvider();
+    console.log(provider);
+
+    try {
+      const data = await provider.readContract({
+        address: tokenContractAddress,
+        abi: tokenContractAbi,
+        functionName: "balanceOf",
+        args: [
+          walletAddress, // Convert the amount to wei
+        ],
+      });
+      console.log(Number(String(data)));
+      return Number(String(data));
+    } catch (error) {
+      console.log("error minting refer tokens", error);
+    }
+
+    // try {
+    //   const data = await readContract({
+    //     address: contractAddress as Hex,
+    //     abi: abi,
+    //     functionName: functionName,
+    //     args: [argument],
+    //     publicClient: client,
+    //   });
+    //   console.log(data);
+    //   return data;
+    // } catch (error) {
+    //   console.error("Error reading from contract:", error);
+    //   throw error;
+    // }
+  };
   const handleMintAndApprove = async () => {
     const res1 = await approveReferSpender();
     const res2 = await mintReferToken();
+
     console.log(res1);
     console.log(res2);
   };
 
   useEffect(() => {
     const fetchCampaigns = async () => {
+      const res3 = await getReferTokenBalance();
+      setReferTokenBalance(res3);
+      console.log("is the user influencer", isInfluencer);
       if (isInfluencer) {
         const allCampaigns = await getJoinedCampaigns();
+        console.log(allCampaigns);
         setAllCampaigns(allCampaigns);
       } else {
         const allCampaigns = await getBrandCampaigns();
@@ -286,17 +332,20 @@ const Campaigns = () => {
           create ? "flex" : "hidden"
         } `}
       >
-        {!isInfluencer ? (
-          <div className="flex justify-between items-center">
-            <p className="text-5xl font-semibold text-white">Campaigns</p>
-            <button
-              className="py-2 px-3 bg-[#00B24F] text-white text-sm rounded-lg cursor-pointer"
-              onClick={() => {
-                handleMintAndApprove()
-              }}
-            >
-              Get Test Tokens
-            </button>
+        <div className="flex justify-between items-center">
+          <p className="text-5xl font-semibold text-white">Campaigns</p>
+          <p className="text-xl font-semibold text-white">
+            Balance:{referTokenBalance}
+          </p>
+          <button
+            className="py-2 px-3 bg-[#00B24F] text-white text-sm rounded-lg cursor-pointer"
+            onClick={() => {
+              handleMintAndApprove();
+            }}
+          >
+            Get Test Tokens
+          </button>
+          {!isInfluencer ? (
             <button
               className="py-2 px-3 bg-[#00B24F] text-white text-sm rounded-lg cursor-pointer"
               onClick={() => {
@@ -305,10 +354,10 @@ const Campaigns = () => {
             >
               Create Campaign
             </button>
-          </div>
-        ) : (
-          <></>
-        )}
+          ) : (
+            <></>
+          )}
+        </div>
 
         <div className="w-[30%] flex justify-center items-center gap-2">
           <button

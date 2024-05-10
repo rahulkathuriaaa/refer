@@ -29,11 +29,13 @@ const ReferalCode = (address) => {
   };
   const webStoreData = async () => {
     const res = await appwriteService.getBrandWebStoreKey(address.address);
+    console.log(res)
     console.log(res.documents[0].api_key);
     const data = {
       shopifyToken: res.documents[0].api_key,
       shopifyStore: res.documents[0].website,
     }; //api_key website
+    console.log(data)
     return data;
   };
 

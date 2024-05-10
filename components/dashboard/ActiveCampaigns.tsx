@@ -4,14 +4,15 @@ import React from "react";
 import CardsActiveCampaigns from "../cards/CardsActiveCampaigns";
 
 function ActiveCampaigns(campaigns: any) {
-  console.log(campaigns.campaigns);
+  console.log("the campaign address",campaigns.campaigns);
 
   return (
     <div className="flex flex-col gap-4">
       {campaigns.campaigns.map((campaign, index) => (
         <CardsActiveCampaigns
           key={index}
-          address={campaign._contract}
+          address={campaign._host}
+          contractAddress={campaign._contract}
           campaign={campaign.name}
           campaigndesc={campaign.description}
           // number={"30"}

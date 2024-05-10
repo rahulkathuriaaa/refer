@@ -27,126 +27,237 @@ const CardsWhitelistInfluencer = ({
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
   const walletAddress = user?.verifiedCredentials[0].address;
+  // const isInfluencer = useIsInfluencer.getState().isInfluencer;
+  console.log("wallet ", walletAddress);
+  console.log("campaign address",campaignAddress)
+  console.log("influencer address",influencerAddress)
   const getSigner = async () => {
-    return await primaryWallet?.connector.ethers?.getSigner();
+    return await primaryWallet.connector.getSigner<
+      WalletClient<Transport, Chain, Account>
+    >();
   };
   const getProvider = async () => {
-    return await primaryWallet?.connector.ethers?.getWeb3Provider();
+    return await primaryWallet.connector.getPublicClient<PublicClient>();
   };
-  const getSigner2 = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      try {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        return signer;
-      } catch (error) {
-        console.error("Error requesting accounts:", error);
-        return null;
-      }
-    } else {
-      console.error("MetaMask not detected");
-      return null;
-    }
-  };
+  // const getCampaignIdT = async () => {
+  //   const provider = await getProvider();
+  //   //  console.log(provider);
+  //   const contract = new ethers.Contract(
+  //     referFactoryContractAddress,
+  //     referFactoryContractAbi,
+  //     provider
+  //   );
+  //   try {
+  //     const tx = await contract.campaignToId(campaignAddress);
+  //     //await tx.wait();
+  //     console.log(tx);
+  //     return Number(String(tx));
+  //   } catch (error) {
+  //     console.error("Transaction failed:", error);
+  //     return false;
+  //   }
+  // };
   const getCampaignId = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
     const provider = await getProvider();
-    //  console.log(provider);
-    const contract = new ethers.Contract(
-      referFactoryContractAddress,
-      referFactoryContractAbi,
-      provider
-    );
+    console.log(provider);
+
     try {
-      const tx = await contract.campaignToId(campaignAddress);
-      //await tx.wait();
-      console.log(tx);
-      return Number(String(tx));
+      const data = await provider.readContract({
+        address: referFactoryContractAddress,
+        abi: referFactoryContractAbi,
+        functionName: "campaignToId",
+        args: [campaignAddress],
+      });
+      console.log("ID for camaoign address",campaignAddress,"is",data);
+      return data;
     } catch (error) {
-      console.error("Transaction failed:", error);
-      return false;
+      console.log("error getting campaign ID", error);
     }
   };
+  // const isWhitelistedT = async () => {
+  //   const provider = await getProvider();
+  //   //  console.log(provider);
+  //   const contract = new ethers.Contract(
+  //     campaignAddress,
+  //     campaignContractAbi,
+  //     provider
+  //   );
+  //   try {
+  //     const tx = await contract.isWhitelisted(influencerAddress);
+  //     //await tx.wait();
+  //     console.log(tx);
+  //     return tx;
+  //   } catch (error) {
+  //     console.error("Transaction failed:", error);
+  //     return false;
+  //   }
+  // };
   const isWhitelisted = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+    console.log(influencerAddress);
     const provider = await getProvider();
-    //  console.log(provider);
-    const contract = new ethers.Contract(
-      campaignAddress,
-      campaignContractAbi,
-      provider
-    );
+    console.log(provider);
+
     try {
-      const tx = await contract.isWhitelisted(influencerAddress);
-      //await tx.wait();
-      console.log(tx);
-      return tx;
+      const data = await provider.readContract({
+        address: campaignAddress,
+        abi: campaignContractAbi,
+        functionName: "isWhitelisted",
+        args: [influencerAddress],
+      });
+      console.log("Influencer whitelist status");
+      console.log(data);
+      if (data) {
+        console.log(influencerAddress);
+      }
+      return data;
     } catch (error) {
-      console.error("Transaction failed:", error);
-      return false;
+      console.log("error getting if whitelisted", error);
     }
   };
+  // const isEligibleToClaim = async () => {
+  //   const provider = await getProvider();
+  //   //  console.log(provider);
+  //   const contract = new ethers.Contract(
+  //     campaignAddress,
+  //     campaignContractAbi,
+  //     provider
+  //   );
+  //   try {
+  //     const tx = await contract.isWhitelisted(influencerAddress);
+  //     //await tx.wait();
+  //     console.log(tx);
+  //     return tx;
+  //   } catch (error) {
+  //     console.error("Transaction failed:", error);
+  //     return false;
+  //   }
+  // };
   const isEligibleToClaim = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
     const provider = await getProvider();
-    //  console.log(provider);
-    const contract = new ethers.Contract(
-      campaignAddress,
-      campaignContractAbi,
-      provider
-    );
+    console.log(provider);
+
     try {
-      const tx = await contract.isWhitelisted(influencerAddress);
-      //await tx.wait();
-      console.log(tx);
-      return tx;
+      const data = await provider.readContract({
+        address: campaignAddress,
+        abi: campaignContractAbi,
+        functionName: "isEligibleToClaim",
+        args: [influencerAddress],
+      });
+      console.log(data);
+      return data;
     } catch (error) {
-      console.error("Transaction failed:", error);
-      return false;
+      console.log("error getting if eligible to claim ", error);
     }
   };
+  // const whitelistInfluencerT = async () => {
+  //   console.log("campaign add :", campaignAddress);
+  //   const campaignId = await getCampaignId();
+  //   const functionName = "whitelistUsers";
+  //   const functionArguments = [campaignId, influencerAddress];
+  //   const signer = await getSigner();
+
+  //   const contract = new ethers.Contract(
+  //     referFactoryContractAddress,
+  //     referFactoryContractAbi,
+  //     signer
+  //   );
+  //   try {
+  //     const tx = await contract[functionName](...functionArguments, {
+  //       gasLimit: ethers.utils.hexlify(1000000), // Set a manual gas limit
+  //     });
+  //     await tx.wait();
+  //     return tx.hash;
+  //   } catch (error) {
+  //     console.error("Transaction failed:", error);
+  //     return false;
+  //   }
+  // };
   const whitelistInfluencer = async () => {
-    console.log("campaign add :", campaignAddress);
-    const campaignId = await getCampaignId();
-    const functionName = "whitelistUsers";
-    const functionArguments = [campaignId, influencerAddress];
-    const signer = await getSigner();
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
 
-    const contract = new ethers.Contract(
-      referFactoryContractAddress,
-      referFactoryContractAbi,
-      signer
-    );
+    const signer = await getSigner();
+    console.log(signer);
+    const campaignId = await getCampaignId();
+
     try {
-      const tx = await contract[functionName](...functionArguments, {
-        gasLimit: ethers.utils.hexlify(1000000), // Set a manual gas limit
+      const data = await signer.writeContract({
+        address: referFactoryContractAddress,
+        abi: referFactoryContractAbi,
+        functionName: "whitelistUsers",
+        args: [campaignId, influencerAddress],
       });
-      await tx.wait();
-      return tx.hash;
+      console.log(data);
+      return data;
     } catch (error) {
-      console.error("Transaction failed:", error);
-      return false;
+      console.log("error whiteListing influencer ", error);
     }
   };
-  const makeInfluencerEligibleToClaim = async () => {
-    console.log("campaign add :", campaignAddress);
-    const campaignId = await getCampaignId();
-    const functionName = "markAsEligibleToClaim";
-    const functionArguments = [campaignId, influencerAddress];
-    const signer = await getSigner2();
+  // const makeInfluencerEligibleToClaimT = async () => {
+  //   console.log("campaign add :", campaignAddress);
+  //   const campaignId = await getCampaignId();
+  //   const functionName = "markAsEligibleToClaim";
+  //   const functionArguments = [campaignId, influencerAddress];
+  //   const signer = await getSigner2();
 
-    const contract = new ethers.Contract(
-      referFactoryContractAddress,
-      referFactoryContractAbi,
-      signer
-    );
+  //   const contract = new ethers.Contract(
+  //     referFactoryContractAddress,
+  //     referFactoryContractAbi,
+  //     signer
+  //   );
+  //   try {
+  //     const tx = await contract[functionName](...functionArguments, {
+  //       gasLimit: ethers.utils.hexlify(1000000), // Set a manual gas limit
+  //     });
+  //     await tx.wait();
+  //     return tx.hash;
+  //   } catch (error) {
+  //     console.error("Transaction failed:", error);
+  //     return false;
+  //   }
+  // };
+  const makeInfluencerEligibleToClaim = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const signer = await getSigner();
+    console.log(signer);
+    const campaignId = await getCampaignId();
+
     try {
-      const tx = await contract[functionName](...functionArguments, {
-        gasLimit: ethers.utils.hexlify(1000000), // Set a manual gas limit
+      const data = await signer.writeContract({
+        address: referFactoryContractAddress,
+        abi: referFactoryContractAbi,
+        functionName: "markAsEligibleToClaim",
+        args: [campaignId, influencerAddress],
       });
-      await tx.wait();
-      return tx.hash;
+      console.log(data);
+      return data;
     } catch (error) {
-      console.error("Transaction failed:", error);
-      return false;
+      console.log("error making eligible to claim influencer ", error);
     }
   };
 
@@ -192,7 +303,7 @@ const CardsWhitelistInfluencer = ({
         <div className="flex justify-end items-center pt-4">
           {isInfluencerWhitelisted ? (
             <div>
-              {isInfluencerEligibleToClaim ? (
+              {!isInfluencerEligibleToClaim ? (
                 <button
                   onClick={() => {
                     makeInfluencerEligibleToClaim();
