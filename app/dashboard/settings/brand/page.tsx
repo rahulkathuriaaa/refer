@@ -7,7 +7,7 @@ import NotificationSetting from "@/components/dashboard/settings/NotificationSet
 import React, { useState } from "react";
 
 function BrandSettings() {
-  const [activePage, setActivePage] = useState("AccountPage");
+  const [activePage, setActivePage] = useState("ProfilePage");
   return (
     <Layout>
       <div className="">
@@ -29,6 +29,7 @@ function BrandSettings() {
     if (activePage == "NotificationPage") {
       return <NotificationSetting />;
     }
+   
   }
 
   function Layout({ children }: { children: React.ReactNode }) {

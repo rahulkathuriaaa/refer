@@ -1,4 +1,4 @@
-// @ts-nocheck 
+// @ts-nocheck
 import React, { useState } from "react";
 import Image from "next/image";
 import { useBrandData } from "@/store";
@@ -8,6 +8,7 @@ function ProfileSetting() {
   const [newName, setNewName] = useState(useBrandData.getState().name);
   const [newDesc, setNewDesc] = useState(useBrandData.getState().description);
   const [newWebsite, setNewWebsite] = useState(useBrandData.getState().website);
+  const [newApiKey, setNewApiKey] = useState(useBrandData.getState().api_key);
   const [newProfileImg, setNewProfileImg] = useState(
     useBrandData.getState().profile_img
   );
@@ -57,6 +58,19 @@ function ProfileSetting() {
           />
         </div>
         <div className="flex flex-col gap-2">
+          <label className="text-3xl text-white font-bold">Api Key</label>
+          <input
+            type="text"
+            id="event-name"
+            placeholder="Link"
+            className="bg-[#27292D] text-lg rounded-2xl p-4 text-white  w-[50%]"
+            value={newApiKey}
+            onChange={(e) => {
+              setNewApiKey(e.target.value);
+            }}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
           <p className="text-3xl text-white font-bold">Brand Logo</p>
           <input
             onChange={async (event) => {
@@ -83,7 +97,7 @@ function ProfileSetting() {
         </div>
       </div>
 
-      <div className="w-[70%] flex flex-col gap-6">
+      {/* <div className="w-[70%] flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div className="text-2xl text-white font-bold">
             Profile Visibility
@@ -126,7 +140,7 @@ function ProfileSetting() {
             Social Media Accounts
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div className="gap-4 flex ">
         <button
@@ -136,6 +150,7 @@ function ProfileSetting() {
               name: newName,
               description: newDesc,
               website: newWebsite,
+              api_key: newApiKey,
             });
             updateBrandData();
           }}

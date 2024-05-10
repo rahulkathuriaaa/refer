@@ -5,7 +5,7 @@ const SettingsNavBar = (props: any) => {
   return (
     <div id="settingsnav" className="">
       <div className="flex items-center gap-12 text-white">
-        <span
+        {/* <span
           onClick={() => props.setActivePage("AccountPage")}
           className="cursor-pointer"
         >
@@ -14,7 +14,7 @@ const SettingsNavBar = (props: any) => {
             page_name="account"
             isActive={props.activePage == "AccountPage"}
           />
-        </span>
+        </span> */}
         <span
           onClick={() => props.setActivePage("ProfilePage")}
           className="cursor-pointer"
@@ -25,7 +25,7 @@ const SettingsNavBar = (props: any) => {
             isActive={props.activePage == "ProfilePage"}
           />
         </span>
-        <span
+        {/* <span
           onClick={() => props.setActivePage("PaymentPage")}
           className="cursor-pointer"
         >
@@ -34,8 +34,8 @@ const SettingsNavBar = (props: any) => {
             page_name="payment"
             isActive={props.activePage == "PaymentPage"}
           />
-        </span>
-        <span
+        </span> */}
+        {/* <span
           onClick={() => props.setActivePage("NotificationPage")}
           className="cursor-pointer"
         >
@@ -44,7 +44,7 @@ const SettingsNavBar = (props: any) => {
             page_name="notification"
             isActive={props.activePage == "NotificationPage"}
           />
-        </span>
+        </span> */}
       </div>
     </div>
   );
