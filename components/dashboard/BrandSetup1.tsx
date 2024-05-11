@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useRef } from "react";
 import Image from "next/image";
@@ -14,7 +13,9 @@ function BrandSetup1() {
   const [brandWebsite, setBrandWebsite] = useState<string>();
   const [brandAddress, setBrandAddress] = useState<string>();
   const [brandRegistrationCode, setBrandRegistrationCode] = useState<string>();
-  const [newProfileImg, setNewProfileImg] = useState("/LogoUpload.svg");
+  const [newProfileImg, setNewProfileImg] = useState(
+    "https://cloud.appwrite.io/v1/storage/buckets/661fea24623719ef827e/files/663fec9d003c5a4cfd03/view?project=65ff0caf1bc188ff5282&mode=admin"
+  );
   const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
     useDynamicContext();
   const fileInputRef = useRef(null);

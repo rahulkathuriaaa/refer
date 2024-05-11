@@ -3,9 +3,28 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BrandSetup3 from "./BrandSetup3";
+import { useBrandData } from "@/store";
 
 function BrandSetup2() {
   const [choose, setChoose] = useState(true);
+  const [links, setLinks] = useState([]);
+  const handleLinkChange = (index, value) => {
+    const updatedLinks = [...links];
+    updatedLinks[index] = value;
+    setLinks(updatedLinks);
+  };
+
+  function updateStore() {
+    useBrandData.setState({
+      links: String(links),
+    });
+    console.log("store Updated 2");
+  }
+  const handleContinue = () => {
+    console.log(String(links));
+    updateStore();
+    setChoose(false);
+  };
   return (
     <>
       <div
@@ -30,9 +49,12 @@ function BrandSetup2() {
                     />
                     <p>Instagram</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(0, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Captivate your audience with visually stunning stories and
@@ -52,9 +74,12 @@ function BrandSetup2() {
                     />
                     <p>Facebook</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(1, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Targeted advertising, massive user base, and diverse
@@ -74,9 +99,12 @@ function BrandSetup2() {
                     />
                     <p>Twitter</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(2, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Real-time conversations, breaking news, and cultural pulse -
@@ -96,9 +124,12 @@ function BrandSetup2() {
                     />
                     <p>Tiktok</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(3, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Unleash viral potential & real connections through creative,
@@ -118,9 +149,12 @@ function BrandSetup2() {
                     />
                     <p>LinkedIn</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(4, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connect with professionals, build thought leadership, and
@@ -140,9 +174,12 @@ function BrandSetup2() {
                     />
                     <p>Youtube</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(5, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connecting you with professionals in your industries,
@@ -162,9 +199,12 @@ function BrandSetup2() {
                     />
                     <p>Mailchamp</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(6, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connecting you with professionals in your industries,
@@ -184,9 +224,12 @@ function BrandSetup2() {
                     />
                     <p>Beehiive</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(7, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connecting you with professionals in your industries,
@@ -207,9 +250,12 @@ function BrandSetup2() {
                     <p>Medium</p>
                   </div>
 
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(8, e.target.value)}
+                  />
                 </div>
 
                 <p className="text-[#909090]">
@@ -222,7 +268,8 @@ function BrandSetup2() {
             <button
               className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl md:rounded-lg w-[30%]"
               onClick={() => {
-                setChoose(false);
+                handleContinue();
+                // setChoose(false);
               }}
             >
               Continue
