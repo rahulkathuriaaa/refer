@@ -1,23 +1,43 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import InfluencerSetup2 from "./InfluencerSetup2";
 import { useInfluencerData } from "@/store";
 import { useDynamicContext } from "@/lib/dynamic";
+import appwriteService from "@/appwrite/config";
 
 function InfluencerSetup1() {
   const [choose, setChoose] = useState(true);
   const [name, setName] = useState<string>();
   const [bio, setBio] = useState<string>();
+  const [newProfileImg, setNewProfileImg] = useState("/LogoUpload.svg");
   const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
-  useDynamicContext();
+    useDynamicContext();
+  const fileInputRef = useRef(null);
   function updateStore() {
     useInfluencerData.setState({
       name: name,
       bio: bio,
-      publicKey:user?.verifiedCredentials[0].address,
+      publicKey: user?.verifiedCredentials[0].address,
+      profile_img: newProfileImg,
     });
   }
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    try {
+      const res = await appwriteService.uploadProilePic(file);
+      console.log(res.href);
+      setNewProfileImg(res.href);
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -33,17 +53,19 @@ function InfluencerSetup1() {
               <label className="mb-2 cursor-pointer">
                 Your Picture
                 <input
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
                   type="file"
-                  name="file_upload"
+                  name=""
                   id=""
-                  className="hidden"
+                  style={{ display: "none" }}
                 />
                 <Image
-                  src="/LogoUpload.svg"
+                  src={newProfileImg}
                   width="252"
                   height="300"
-                  className=""
                   alt="Ref3r logo"
+                  onClick={handleImageClick}
                 />
               </label>
             </div>
@@ -85,7 +107,6 @@ function InfluencerSetup1() {
             </button>
           </div>
         </div>
-
 
         <div className="w-[50%] h-[94vh] top-[3%] sticky rounded-2xl bg-[#15A145] flex justify-center items-center">
           <Image

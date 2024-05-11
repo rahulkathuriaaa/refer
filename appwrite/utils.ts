@@ -86,4 +86,5 @@ export async function updateBrandData() {
     brandData.profile_img
   );
   console.log(data);
+  return data;
 }

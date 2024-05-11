@@ -233,7 +233,11 @@ export class AppwriteService {
 
   async uploadProilePic(file: any) {
     try {
-      return storage.createFile(bucketId, ID.unique(), file);
+      const res = await storage.createFile(bucketId, ID.unique(), file);
+      //return res;
+      const picUrl = await storage.getFileView(bucketId, res.$id);
+      console.log(picUrl)
+      return picUrl;
     } catch (error) {
       console.log(error);
     }

@@ -12,6 +12,7 @@ import {
 
 const ClaimTokens = ({ campaignAddress }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasClaimed, setHasClaimed] = useState(true);
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
   const walletAddress = user?.verifiedCredentials[0].address;
@@ -51,6 +52,31 @@ const ClaimTokens = ({ campaignAddress }) => {
     }
   };
 
+  const getClaimStatus = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const provider = await getProvider();
+    console.log(provider);
+    console.log(campaignAddress);
+
+    try {
+      const data = await provider.readContract({
+        address: campaignAddress,
+        abi: campaignContractAbi,
+        functionName: "claimed",
+        args: [walletAddress],
+      });
+      console.log("claim status", data);
+      return data;
+    } catch (error) {
+      console.log("error checking if inbfluencer has already claimed", error);
+    }
+  };
+
   const makeClaim = async (id) => {
     if (!primaryWallet) {
       console.log("primary wallet error");
@@ -78,21 +104,30 @@ const ClaimTokens = ({ campaignAddress }) => {
 
   const togglePopup = async () => {
     const id = await getCampaignId();
-    const res = makeClaim(id);
-    console.log(res)
+    const res = await makeClaim(id);
+
+    console.log(hasClaimed);
     setIsOpen(!isOpen);
   };
+  useState(async() => {
+    const hasClaimed = await getClaimStatus();
+    setHasClaimed(hasClaimed);
+  },[]);
 
   return (
     <div className="">
-      <button
-        onClick={() => {
-          togglePopup();
-        }}
-        className="px-4 py-2 border rounded-lg"
-      >
-        Claim Tokens
-      </button>
+      {hasClaimed ? (
+        <button className="px-4 py-2 border rounded-lg">Already Claimed</button>
+      ) : (
+        <button
+          onClick={() => {
+            togglePopup();
+          }}
+          className="px-4 py-2 border rounded-lg"
+        >
+          Claim Tokens
+        </button>
+      )}
       {/* {isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-40 backdrop-blur-[4px] z-10">
           <div className="bg-[#7EE5A1] px-6 py-10 rounded-[0.6rem] flex flex-col gap-6 w-[50%] justify-center items-center shadow-lg">

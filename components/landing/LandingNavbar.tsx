@@ -24,6 +24,8 @@ import { useUserActions } from "@/hooks/useUserActions";
 function LandingNavbar() {
   const [Toggle, setToggle] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [authenticatedForDashboard, setAuthenticatedForDashboard] =
+    useState(false);
   const router = useRouter();
   const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
     useDynamicContext();
@@ -73,7 +75,7 @@ function LandingNavbar() {
     if (isAuthenticated) {
       // console.log("user payload data", user?.email);
       console.log("user objh");
-     // console.log(user?.verifiedCredentials[1].address);
+      // console.log(user?.verifiedCredentials[1].address);
       usePublicKey.setState({ publicKey: user?.email });
       const key = usePublicKey.getState().publicKey;
       console.log(key);
@@ -85,7 +87,8 @@ function LandingNavbar() {
         console.log(user);
         console.log(setup);
         if (user) {
-          router.push("/dashboard");
+          setAuthenticatedForDashboard(true);
+          //router.push("/dashboard");
         }
       };
 
@@ -148,6 +151,13 @@ function LandingNavbar() {
             <Link href="/">
               <p className="hoverUnderline hover:text-[#00B24F]">Contact us</p>
             </Link>
+            {authenticatedForDashboard ? (
+              <Link href="/dashboard">
+                <p className="hoverUnderline hover:text-[#00B24F]">Dashboard</p>
+              </Link>
+            ) : (
+              <></>
+            )}
           </div>
 
           <div className="mr-4">
@@ -226,6 +236,7 @@ function LandingNavbar() {
                       <p className="pl-2 text-left">Settings</p>
                     </div>
                   </Link>
+
                   <hr />
                   <button
                     className="w-full hover:bg-[#6E6E6E]"

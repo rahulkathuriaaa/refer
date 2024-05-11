@@ -1,4 +1,4 @@
-// @ts-nocheck 
+// @ts-nocheck
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -23,6 +23,9 @@ const DashHome = () => {
   const [data, setData] = useState();
   const [name, setName] = useState<string>();
   const [userDescription, setUserDescription] = useState<string>();
+  const [profileImg, setProfileImg] = useState<string>(
+    "/icons/ProfileIcon.svg"
+  );
   const [loading, setLoading] = useState(false);
   const [allBrands, setAllBrands] = useState();
   const [allInfluencers, setAllInfluencers] = useState();
@@ -37,12 +40,14 @@ const DashHome = () => {
       console.log("name fetched", useBrandData.getState().name);
       setUserDescription(useBrandData.getState().description);
       setCurrentUserDocumentId(useBrandData.getState().documentId);
+      setProfileImg(useBrandData.getState().profile_img);
     }
     if (userType == "influencer") {
       setName(useInfluencerData.getState().name);
       console.log("name fetched", useInfluencerData.getState().name);
       setUserDescription(useInfluencerData.getState().bio);
       setCurrentUserDocumentId(useInfluencerData.getState().documentId);
+      setProfileImg(useInfluencerData.getState().profile_img);
     }
 
     console.log(currentUserDocumentId);
@@ -70,7 +75,7 @@ const DashHome = () => {
             <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-4">
               <div className="flex justify-between items-center">
                 <Image
-                  src={`/icons/ProfileIcon.svg`}
+                  src={profileImg}
                   width="225"
                   height="100"
                   alt="home fill"
@@ -212,7 +217,7 @@ const DashHome = () => {
                   allInfluencers.documents.map((e) => (
                     <DashHomeInfuencers
                       key={e.$id}
-                      image={`Influencer1.svg`}
+                      image={e.profile_img}
                       name={e.name}
                       currentUserDocumentId={currentUserDocumentId}
                       cardDocumentId={e.$id}
@@ -231,7 +236,7 @@ const DashHome = () => {
                 allBrands.documents.length > 0 ? (
                   allBrands.documents.map((e) => (
                     <DashHomeInfuencers
-                      image={`Influencer1.svg`}
+                      image={e.profile_img}
                       name={e.name}
                       currentUserDocumentId={currentUserDocumentId}
                       cardDocumentId={e.$id}

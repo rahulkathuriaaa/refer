@@ -197,11 +197,12 @@ function CreateCampaign() {
           campaignAmount,
           campaignClaimRate,
         ],
+        gasLimit: ethers.utils.parseUnits("100", "gwei"),
       });
       console.log(data);
       return data;
     } catch (error) {
-      console.log("error reading brand campaigns", error);
+      console.log("error creating brand campaigns", error);
     }
 
     // try {

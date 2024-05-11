@@ -36,6 +36,7 @@ const Campaigns = () => {
   const { user } = useDynamicContext();
   const walletAddress = user?.verifiedCredentials[0].address;
   const isInfluencer = useIsInfluencer.getState().isInfluencer;
+  console.log("is actually influencer", isInfluencer);
   console.log("wallet ", walletAddress);
   const getSigner = async () => {
     return await primaryWallet.connector.getSigner<

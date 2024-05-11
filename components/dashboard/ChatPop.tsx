@@ -42,7 +42,7 @@ const ChatPop = ({ room, name }) => {
                 />
                 <div className="flex flex-col justify-start items-start">
                   <p>{name}</p>
-                  <p className="text-sm font-normal">#CU6798S</p>
+               
                 </div>
               </div>
               <button

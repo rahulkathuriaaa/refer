@@ -1,9 +1,11 @@
+
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import BrandSetup2 from "./BrandSetup2";
 import { useBrandData } from "@/store";
 import { useDynamicContext } from "@/lib/dynamic";
+import appwriteService from "@/appwrite/config";
 
 function BrandSetup1() {
   const [choose, setChoose] = useState(true);
@@ -12,8 +14,10 @@ function BrandSetup1() {
   const [brandWebsite, setBrandWebsite] = useState<string>();
   const [brandAddress, setBrandAddress] = useState<string>();
   const [brandRegistrationCode, setBrandRegistrationCode] = useState<string>();
+  const [newProfileImg, setNewProfileImg] = useState("/LogoUpload.svg");
   const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
     useDynamicContext();
+  const fileInputRef = useRef(null);
   function updateStore() {
     useBrandData.setState({
       name: brandName,
@@ -22,9 +26,25 @@ function BrandSetup1() {
       address: brandAddress,
       business_reg_code: brandRegistrationCode,
       publicKey: user?.verifiedCredentials[0].address,
+      profile_img: newProfileImg,
     });
     console.log("store Updated 1");
   }
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    try {
+      const res = await appwriteService.uploadProilePic(file);
+      console.log(res.href);
+      setNewProfileImg(res.href);
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+    }
+  };
 
   return (
     <>
@@ -41,17 +61,19 @@ function BrandSetup1() {
               <label className="mb-2 cursor-pointer">
                 Brand Logo
                 <input
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
                   type="file"
-                  name="file_upload"
+                  name=""
                   id=""
-                  className="hidden"
+                  style={{ display: "none" }}
                 />
                 <Image
-                  src="/LogoUpload.svg"
+                  src={newProfileImg}
                   width="252"
                   height="300"
-                  className="w-full"
                   alt="Ref3r logo"
+                  onClick={handleImageClick}
                 />
               </label>
             </div>

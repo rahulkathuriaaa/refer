@@ -1,9 +1,11 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useBrandData } from "@/store";
 import { updateBrandData } from "@/appwrite/utils";
 import appwriteService from "@/appwrite/config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function ProfileSetting() {
   const [newName, setNewName] = useState(useBrandData.getState().name);
   const [newDesc, setNewDesc] = useState(useBrandData.getState().description);
@@ -12,6 +14,26 @@ function ProfileSetting() {
   const [newProfileImg, setNewProfileImg] = useState(
     useBrandData.getState().profile_img
   );
+  const fileInputRef = useRef(null);
+  const showToastMessage = () => {
+    toast("Update Sucessfull");
+  };
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    try {
+      const res = await appwriteService.uploadProilePic(file);
+      console.log(res.href);
+      setNewProfileImg(res.href);
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-8">
@@ -71,32 +93,27 @@ function ProfileSetting() {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-3xl text-white font-bold">Brand Logo</p>
-          <input
-            onChange={async (event) => {
-              const file = event.target.files[0];
-
-              try {
-                const res = await appwriteService.uploadProilePic(file);
-                console.log(res);
-              } catch (error) {
-                console.error("Error uploading profile picture:", error);
-              }
-            }}
-            type="file"
-            name=""
-            id=""
-          />
-          <Image
-            src="/LogoUpload.svg"
-            width="252"
-            height="300"
-            className="w-[10%]"
-            alt="Ref3r logo"
-          />
+          <div className="flex flex-col gap-2">
+            <p className="text-3xl text-white font-bold">Brand Logo</p>
+            <input
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              type="file"
+              name=""
+              id=""
+              style={{ display: "none" }}
+            />
+            <Image
+              src={newProfileImg}
+              width="252"
+              height="300"
+              className="w-[10%] cursor-pointer"
+              alt="Ref3r logo"
+              onClick={handleImageClick}
+            />
+          </div>
         </div>
       </div>
-
       {/* <div className="w-[70%] flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div className="text-2xl text-white font-bold">
@@ -141,23 +158,27 @@ function ProfileSetting() {
           </button>
         </div>
       </div> */}
-
       <div className="gap-4 flex ">
         <button
           className="bg-[#00B24F] p-4 text-xl text-white rounded-xl min-w-[15%]"
-          onClick={() => {
+          onClick={async() => {
             useBrandData.setState({
               name: newName,
               description: newDesc,
               website: newWebsite,
               api_key: newApiKey,
+              profile_img: newProfileImg,
             });
-            updateBrandData();
+            const res = await updateBrandData();
+            if (res) {
+              showToastMessage();
+            }
           }}
         >
           Save Changes
         </button>
       </div>
+      <ToastContainer></ToastContainer>{" "}
     </div>
   );
 }
