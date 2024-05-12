@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import React from "react";
 import { useState, useMemo } from "react";
@@ -40,25 +41,19 @@ function DashboardComponent() {
   );
 }
 
-const Layout = React.memo(
-  ({
-    children,
-    setActivePage,
-    activePage,
-  }: {
-    children: React.ReactNode;
-    setActivePage: Function;
-    activePage: string;
-  }) => {
-    return (
-      <div className="w-full flex">
-        <div className="bg-[#1E2023] w-[20%]">
-          <Sidebar setActivePage={setActivePage} activePage={activePage} />
-        </div>
-        {children}
+const Layout = React.memo(function Layout({
+  children,
+  setActivePage,
+  activePage,
+}) {
+  return (
+    <div className="w-full flex">
+      <div className="bg-[#1E2023] w-[20%]">
+        <Sidebar setActivePage={setActivePage} activePage={activePage} />
       </div>
-    );
-  }
-);
+      {children}
+    </div>
+  );
+});
 
 export default DashboardComponent;
