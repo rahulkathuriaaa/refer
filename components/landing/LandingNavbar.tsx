@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { sendEmail } from "../../utils";
 
 import {
   createUser,
@@ -20,6 +21,7 @@ import {
   useIsInfluencer,
 } from "@/store";
 import { useUserActions } from "@/hooks/useUserActions";
+import appwriteService from "@/appwrite/config";
 
 function LandingNavbar() {
   const [Toggle, setToggle] = useState(true);
@@ -29,6 +31,9 @@ function LandingNavbar() {
   const router = useRouter();
   const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
     useDynamicContext();
+  const sendMail = async () => {
+    sendEmail("663e085900145098a548", "hi", "test email");
+  };
   // const isUserLoggedIn = useIsLoggedIn()
   // const userAuthenticated = useIsAuthenticated()
   // console.log("is user authenticated", userAuthenticated)
@@ -99,6 +104,10 @@ function LandingNavbar() {
   const myLoader = () => {
     return `https://api.dicebear.com/7.x/initials/svg?seed=${user?.firstName}`;
   };
+  const handleUserLogout = async () => {
+    await appwriteService.logout();
+    handleLogOut();
+  };
 
   const handleClick = () => {
     setToggle(!Toggle);
@@ -120,7 +129,12 @@ function LandingNavbar() {
         <div className="md:flex w-[90%] justify-evenly items-center hidden">
           <div className="flex gap-[2rem] justify-center items-center w-[80%]">
             <Link href="/">
-              <p className="hoverUnderline hover:text-[#00B24F]">Home</p>
+              <p
+                onClick={sendMail}
+                className="hoverUnderline hover:text-[#00B24F]"
+              >
+                Home
+              </p>
             </Link>
 
             <Link
@@ -148,9 +162,10 @@ function LandingNavbar() {
               </p>
             </Link>
 
-            <Link href="/">
-              <p className="hoverUnderline hover:text-[#00B24F]">Contact us</p>
+            <Link href="/support">
+              <p className="hoverUnderline hover:text-[#00B24F]">Get Help</p>
             </Link>
+
             {authenticatedForDashboard ? (
               <Link href="/dashboard">
                 <p className="hoverUnderline hover:text-[#00B24F]">Dashboard</p>
@@ -240,7 +255,7 @@ function LandingNavbar() {
                   <hr />
                   <button
                     className="w-full hover:bg-[#6E6E6E]"
-                    onClick={() => handleLogOut()}
+                    onClick={() => handleUserLogout()}
                   >
                     <div className="flex items-center p-4 justify-left w-full hover:bg-[#6E6E6E]">
                       <div className="pr-2">

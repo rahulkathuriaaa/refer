@@ -18,14 +18,18 @@ export async function checkUserExist(key: string) {
       const data = await appwriteService.getCurrentUser().then();
 
       console.log(data);
+      //sendEmail("b8@bareed.ws", "Login Alert", "New Login Location detected");
       return data;
     } catch (error) {
       console.log("error getting user", error);
     }
     try {
       const res = await appwriteService.login(key);
+
+      console.log("login response is ", res);
       const data = await appwriteService.getCurrentUser().then();
       console.log(data);
+      sendEmail(data?.$id, "Login Alert", "New Login Location detected");
       return data;
     } catch (error) {
       console.log("error logging in ", error);
@@ -104,15 +108,16 @@ export async function checkUserSetup(key: string) {
   }
 }
 
-export async function generateWelcomeEmail(id: string) {
+export async function sendEmail(id: string, subject: string, content: string) {
   try {
     const response = await fetch("/api/welcomeMail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id, subject, content }),
     });
+    console.log(response);
   } catch (error) {
     console.log("error sending email", error);
   }

@@ -18,11 +18,11 @@ export async function POST(req, res) {
   console.log("request body", reqBody.id);
   const message = await messaging.createEmail(
     ID.unique(), // messageId
-    "Login Alert", // subject
-    "New Login detected", // content
+    reqBody.subject, // subject
+    reqBody.content, // content
     [], // topics (optional)
-    [], // users (optional)
-    [reqBody.id], // targets (optional)
+    [reqBody.id], // users (optional)
+    [], // targets (optional)
     [], // cc (optional)
     [],
     [], // bcc (optional)
@@ -30,5 +30,24 @@ export async function POST(req, res) {
     false // html (optional)
     // scheduledAt (optional)
   );
+  // const message = await messaging.createEmail(
+  //   ID.unique(),
+  //   "b7@bareed.ws",
+  //   "Login Alert",
+  //   "b7@bareed.ws"
+  // );
+  // const message = await messaging.createEmail(
+  //   ID.unique(), // messageId
+  //   "Login Alert", // subject
+  //   "New Login detected", // content
+  //   [], // topics (optional)
+  //   [], // users (optional)
+  //   ["663e085900145098a548"], // targets (optional)
+  //   [], // cc (optional)
+  //   [], // bcc (optional)
+  //   false, // draft (optional)
+  //   false, // html (optional)
+  //   "" // scheduledAt (optional)
+  // );
   console.log(message.body);
 }
