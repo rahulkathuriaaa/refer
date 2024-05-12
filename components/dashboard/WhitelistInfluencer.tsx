@@ -80,7 +80,7 @@ function WhitelistInfluencer({
                     key={infAdd.publicKey}
                     campaignAddress={camapignAddresses}
                     influencerAddress={infAdd.publicKey}
-                    image={"/icons/ProfileIcon.svg"}
+                    image={infAdd.profile_img}
                     name={infAdd.name}
                   />
                 }
@@ -94,10 +94,10 @@ function WhitelistInfluencer({
 
           <div className="w-full">
             <div className="w-full flex justify-end items-center gap-4">
-              <button className="text-white text-sm">Back</button>
+              {/* <button className="text-white text-sm">Back</button>
               <button className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]">
                 Create Campaign
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

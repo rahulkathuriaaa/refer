@@ -29,8 +29,8 @@ const CardsWhitelistInfluencer = ({
   const walletAddress = user?.verifiedCredentials[0].address;
   // const isInfluencer = useIsInfluencer.getState().isInfluencer;
   console.log("wallet ", walletAddress);
-  console.log("campaign address",campaignAddress)
-  console.log("influencer address",influencerAddress)
+  console.log("campaign address", campaignAddress);
+  console.log("influencer address", influencerAddress);
   const getSigner = async () => {
     return await primaryWallet.connector.getSigner<
       WalletClient<Transport, Chain, Account>
@@ -74,7 +74,7 @@ const CardsWhitelistInfluencer = ({
         functionName: "campaignToId",
         args: [campaignAddress],
       });
-      console.log("ID for camaoign address",campaignAddress,"is",data);
+      console.log("ID for camaoign address", campaignAddress, "is", data);
       return data;
     } catch (error) {
       console.log("error getting campaign ID", error);
