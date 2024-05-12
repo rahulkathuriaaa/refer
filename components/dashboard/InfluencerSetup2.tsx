@@ -2,9 +2,29 @@
 import { useState } from "react";
 import Image from "next/image";
 import InfluencerSetup3 from "./InfluencerSetup3";
+import { useInfluencerData } from "@/store";
 
 function InfluencerSetup2() {
+  const [links, setLinks] = useState([]);
   const [choose, setChoose] = useState(true);
+  const handleLinkChange = (index, value) => {
+    const updatedLinks = [...links];
+    updatedLinks[index] = value;
+    setLinks(updatedLinks);
+  };
+
+  function updateStore() {
+    useInfluencerData.setState({
+      links: String(links),
+    });
+    console.log("store Updated 2");
+  }
+  const handleContinue = () => {
+    console.log(String(links));
+    updateStore();
+    setChoose(false);
+  };
+
   return (
     <>
       <div
@@ -29,9 +49,12 @@ function InfluencerSetup2() {
                     />
                     <p>Instagram</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(0, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Captivate your audience with visually stunning stories and
@@ -51,9 +74,12 @@ function InfluencerSetup2() {
                     />
                     <p>Facebook</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(1, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Targeted advertising, massive user base, and diverse
@@ -73,9 +99,12 @@ function InfluencerSetup2() {
                     />
                     <p>Twitter</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(2, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Real-time conversations, breaking news, and cultural pulse -
@@ -95,9 +124,12 @@ function InfluencerSetup2() {
                     />
                     <p>Tiktok</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(3, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Unleash viral potential & real connections through creative,
@@ -117,9 +149,12 @@ function InfluencerSetup2() {
                     />
                     <p>LinkedIn</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(4, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connect with professionals, build thought leadership, and
@@ -139,9 +174,12 @@ function InfluencerSetup2() {
                     />
                     <p>Youtube</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(5, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connecting you with professionals in your industries,
@@ -150,7 +188,7 @@ function InfluencerSetup2() {
               </div>
 
               <div className="flex flex-col gap-3 w-[80%] bg-[#27292D] rounded-xl p-4">
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1">
                     <Image
                       src="/icons/champ.svg"
@@ -161,10 +199,13 @@ function InfluencerSetup2() {
                     />
                     <p>Mailchamp</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
-                </div>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(0, e.target.value)}
+                  />
+                </div> */}
                 <p className="text-[#909090]">
                   Connecting you with professionals in your industries,
                   fostering thought leadership, and driving B2B opportunities.
@@ -183,9 +224,12 @@ function InfluencerSetup2() {
                     />
                     <p>Beehiive</p>
                   </div>
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(6, e.target.value)}
+                  />
                 </div>
                 <p className="text-[#909090]">
                   Connecting you with professionals in your industries,
@@ -206,9 +250,12 @@ function InfluencerSetup2() {
                     <p>Medium</p>
                   </div>
 
-                  <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
-                    Authorise
-                  </button>
+                  <input
+                    type="text"
+                    placeholder="Paste Link"
+                    className="bg-[#27292D] text-lg border-white border-2 rounded-2xl p-4 text-white w-[50%]"
+                    onChange={(e) => handleLinkChange(7, e.target.value)}
+                  />
                 </div>
 
                 <p className="text-[#909090]">
@@ -221,7 +268,7 @@ function InfluencerSetup2() {
             <button
               className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl md:rounded-lg w-[30%]"
               onClick={() => {
-                setChoose(false);
+                handleContinue();
               }}
             >
               Continue

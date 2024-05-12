@@ -36,6 +36,7 @@ export async function createInfluencer() {
     main_platform: useInfluencerData.getState().main_platform,
     follower_count: useInfluencerData.getState().follower_count,
     publicKey: useInfluencerData.getState().publicKey,
+    profile_img: useInfluencerData.getState().profile_img,
   };
   appwriteService.createInfluencer(influencerData);
 }

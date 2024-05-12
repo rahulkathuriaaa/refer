@@ -59,7 +59,7 @@ const DashHome = () => {
       setUserDescription(useInfluencerData.getState().bio);
       setCurrentUserDocumentId(useInfluencerData.getState().documentId);
       setProfileImg(useInfluencerData.getState().profile_img);
-      setUserLinks(useBrandData.getState().links);
+      setUserLinks(splitString(useInfluencerData.getState().links));
     }
 
     console.log(currentUserDocumentId);

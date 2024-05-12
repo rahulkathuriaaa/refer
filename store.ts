@@ -79,6 +79,7 @@ export const useInfluencerData = create<InfluencerData>((set) => ({
   setNiche: (niche: string) => {},
   setMain_platform: (mainPlatform: string) => {},
   setFollower_count: (followerCounr: string) => {},
+  setProfile_img: (profile_img: string) => {},
 }));
 
 export const useBrandData = create<BrandData>((set) => ({

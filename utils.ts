@@ -95,6 +95,7 @@ export async function checkUserSetup(key: string) {
       follower_count: influencerData.documents[0].follower_count,
       connections: influencerData.documents[0].connections,
       publicKey: influencerData.documents[0].publicKey,
+      profile_img: influencerData?.documents[0].profile_img,
     });
   }
 
@@ -117,20 +118,30 @@ export async function generateWelcomeEmail(id: string) {
   }
 }
 
-export async function generateDiscountCode(percentage: number, code: string,accessToken:string,shopName:string) {
+export async function generateDiscountCode(
+  percentage: number,
+  code: string,
+  accessToken: string,
+  shopName: string
+) {
   try {
     const response = await fetch("/api/codeGen", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ percentage: percentage, code: code,accessToken:accessToken,shopName:shopName }),
+      body: JSON.stringify({
+        percentage: percentage,
+        code: code,
+        accessToken: accessToken,
+        shopName: shopName,
+      }),
     });
     console.log(response);
     if (response.ok) {
       const data = await response.json();
-      console.log(data)
-      return data
+      console.log(data);
+      return data;
     } else {
       console.log("An error occurred while creating the discount code.");
     }

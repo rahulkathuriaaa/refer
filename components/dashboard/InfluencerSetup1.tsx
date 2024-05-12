@@ -10,7 +10,9 @@ function InfluencerSetup1() {
   const [choose, setChoose] = useState(true);
   const [name, setName] = useState<string>();
   const [bio, setBio] = useState<string>();
-  const [newProfileImg, setNewProfileImg] = useState("/LogoUpload.svg");
+  const [newProfileImg, setNewProfileImg] = useState(
+    "https://cloud.appwrite.io/v1/storage/buckets/661fea24623719ef827e/files/6640664400274b3e9f1a/view?project=65ff0caf1bc188ff5282&mode=admin"
+  );
   const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
     useDynamicContext();
   const fileInputRef = useRef(null);
