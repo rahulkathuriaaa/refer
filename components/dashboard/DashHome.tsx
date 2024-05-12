@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use client";
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DashHomeInfuencers from "../cards/DashHomeInfuencers";
@@ -16,11 +17,83 @@ import {
 } from "@/store";
 
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+
+const TopSellingProducts = React.memo(() => {
+  return (
+    <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
+      <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
+        <p>Top Selling Product</p>
+        <p>View all products &#62;</p>
+      </div>
+      <div className="flex gap-4 flex-wrap">
+        <CardsProductForBrands image={"Product1.svg"} name="Yamaha Bike" />
+        <CardsProductForBrands image={"Product2.svg"} name="Yamaha Bike" />
+        <CardsProductForBrands image={"Product3.svg"} name="Yamaha Bike" />
+        <CardsProductForBrands image={"Product4.svg"} name="Yamaha Bike" />
+        <CardsProductForBrands image={"Product1.svg"} name="Yamaha Bike" />
+      </div>
+    </div>
+  );
+});
+
+const BrandInfluencerProfiles = React.memo(
+  ({ isInfluencer, allBrands, allInfluencers, currentUserDocumentId }) => {
+    return (
+      <div className="bg-[#111111] p-6 w-full rounded-xl flex flex-col gap-6">
+        <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
+          <p>Brand Influencer Profile</p>
+          <p>View other profiles &#62;</p>
+        </div>
+        <div className="flex gap-6 flex-wrap">
+          {!isInfluencer &&
+            allInfluencers &&
+            (allInfluencers ? (
+              allInfluencers.documents.length > 0 ? (
+                allInfluencers.documents.map((e) => (
+                  <DashHomeInfuencers
+                    key={e.$id}
+                    image={e.profile_img}
+                    name={e.name}
+                    currentUserDocumentId={currentUserDocumentId}
+                    cardDocumentId={e.$id}
+                    cardUserKey={e.key}
+                  />
+                ))
+              ) : (
+                <p>No influencers found.</p>
+              )
+            ) : (
+              <p>Invalid data format for influencers.</p>
+            ))}
+          {isInfluencer &&
+            allBrands &&
+            (allInfluencers ? (
+              allBrands.documents.length > 0 ? (
+                allBrands.documents.map((e) => (
+                  <DashHomeInfuencers
+                    image={e.profile_img}
+                    name={e.name}
+                    currentUserDocumentId={currentUserDocumentId}
+                    cardDocumentId={e.$id}
+                    key={e.$id}
+                    cardUserKey={e.key}
+                  />
+                ))
+              ) : (
+                <p>No influencers found.</p>
+              )
+            ) : (
+              <p>Invalid data format for influencers.</p>
+            ))}
+        </div>
+      </div>
+    );
+  }
+);
+
 const DashHome = () => {
   const isInfluencer = useIsInfluencer((state) => state.isInfluencer);
-  console.log(isInfluencer);
   const key = usePublicKey.getState().publicKey;
-  const [data, setData] = useState();
   const [name, setName] = useState<string>();
   const [userDescription, setUserDescription] = useState<string>();
   const [userLinks, setUserLinks] = useState(["a", ""]);
@@ -32,53 +105,52 @@ const DashHome = () => {
   const [allInfluencers, setAllInfluencers] = useState();
   const [currentUserDocumentId, setCurrentUserDocumentId] = useState<string>();
 
-  const description = useBrandData((state) => state.description);
-  function splitString(str) {
-    // Remove leading/trailing whitespace and split the string by comma
+  const splitString = useCallback((str) => {
     const wordsArray = str.trim().split(",");
-
-    // Trim whitespace from each word in the array
     const trimmedArray = wordsArray.map((word) => word.trim());
-
     return trimmedArray;
-  }
-  async function updateData(key: string) {
-    const userType = await checkUserType(key);
-    console.log(userType);
-    if (userType == "brand") {
-      setName(useBrandData.getState().name);
-      console.log("name fetched", useBrandData.getState().name);
-      setUserDescription(useBrandData.getState().description);
-      setCurrentUserDocumentId(useBrandData.getState().documentId);
-      setProfileImg(useBrandData.getState().profile_img);
-      setUserLinks(splitString(useBrandData.getState().links));
-    }
-    if (userType == "influencer") {
-      setName(useInfluencerData.getState().name);
-      console.log("name fetched", useInfluencerData.getState().name);
-      setUserDescription(useInfluencerData.getState().bio);
-      setCurrentUserDocumentId(useInfluencerData.getState().documentId);
-      setProfileImg(useInfluencerData.getState().profile_img);
-      setUserLinks(splitString(useInfluencerData.getState().links));
-    }
+  }, []);
 
-    console.log(currentUserDocumentId);
+  const updateData = useCallback(
+    async (key: string) => {
+      const userType = await checkUserType(key);
+      if (userType == "brand") {
+        setName(useBrandData.getState().name);
+        setUserDescription(useBrandData.getState().description);
+        setCurrentUserDocumentId(useBrandData.getState().documentId);
+        setProfileImg(useBrandData.getState().profile_img);
+        setUserLinks(splitString(useBrandData.getState().links));
+      }
+      if (userType == "influencer") {
+        setName(useInfluencerData.getState().name);
+        setUserDescription(useInfluencerData.getState().bio);
+        setCurrentUserDocumentId(useInfluencerData.getState().documentId);
+        setProfileImg(useInfluencerData.getState().profile_img);
+        setUserLinks(splitString(useInfluencerData.getState().links));
+      }
 
-    const allBrands = await appwriteService.getAllBrands();
-    setAllBrands(allBrands);
-    //console.log(allBrands.documents[0].$collectionId);
-    const allInfluencers = await appwriteService.getAllInfluencers();
-    setAllInfluencers(allInfluencers);
-    //console.log(allInfluencers);
-  }
+      const allBrands = await appwriteService.getAllBrands();
+      setAllBrands(allBrands);
+      const allInfluencers = await appwriteService.getAllInfluencers();
+      setAllInfluencers(allInfluencers);
+    },
+    [splitString]
+  );
 
   useEffect(() => {
     updateData(key);
-  }, []);
+  }, [key, updateData]);
+
+  const memoizedAllBrands = useMemo(() => allBrands, [allBrands]);
+  const memoizedAllInfluencers = useMemo(
+    () => allInfluencers,
+    [allInfluencers]
+  );
 
   const { user } = useDynamicContext();
-  if (loading == true) return <>Fetching....</>;
+  if (loading) return <>Fetching....</>;
   const walletAddress = user?.verifiedCredentials[0].address;
+
   return (
     <div className="flex w-[98%] py-4">
       <div className="flex flex-col justify-center items-center gap-8 w-full">
@@ -115,10 +187,6 @@ const DashHome = () => {
                   />
                 </div>
               </div>
-
-              {/* <p className="text-white text-2xl font-medium">
-                {data ? data.documents[0].name : "Name"}
-              </p> */}
 
               <p className="text-white text-2xl font-medium">
                 {key ? name : "Name"}
@@ -188,35 +256,7 @@ const DashHome = () => {
               </div>
             </div>
 
-            <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
-              <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
-                <p>Top Selling Product</p>
-                <p>View all products &#62;</p>
-              </div>
-              <div className="flex gap-4 flex-wrap">
-                <CardsProductForBrands
-                  image={"Product1.svg"}
-                  name="Yamaha Bike"
-                />
-                <CardsProductForBrands
-                  image={"Product2.svg"}
-                  name="Yamaha Bike"
-                />
-                <CardsProductForBrands
-                  image={"Product3.svg"}
-                  name="Yamaha Bike"
-                />
-                <CardsProductForBrands
-                  image={"Product4.svg"}
-                  name="Yamaha Bike"
-                />
-                <CardsProductForBrands
-                  image={"Product1.svg"}
-                  name="Yamaha Bike"
-                />
-                {/* <CardsProductForBrands image={"Product1.svg"} name="Yamaha Bike" /> */}
-              </div>
-            </div>
+            <TopSellingProducts />
           </div>
 
           <div className="w-[25%] h-full">
@@ -235,54 +275,12 @@ const DashHome = () => {
           </div>
         </div>
 
-        <div className="bg-[#111111] p-6 w-full rounded-xl flex flex-col gap-6">
-          <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
-            <p>Brand Influencer Profile</p>
-            <p>View other profiles &#62;</p>
-          </div>
-          <div className="flex gap-6 flex-wrap">
-            {!isInfluencer &&
-              allInfluencers &&
-              (allInfluencers ? (
-                allInfluencers.documents.length > 0 ? (
-                  allInfluencers.documents.map((e) => (
-                    <DashHomeInfuencers
-                      key={e.$id}
-                      image={e.profile_img}
-                      name={e.name}
-                      currentUserDocumentId={currentUserDocumentId}
-                      cardDocumentId={e.$id}
-                      cardUserKey={e.key}
-                    />
-                  ))
-                ) : (
-                  <p>No influencers found.</p>
-                )
-              ) : (
-                <p>Invalid data format for influencers.</p>
-              ))}
-            {isInfluencer &&
-              allBrands &&
-              (allInfluencers ? (
-                allBrands.documents.length > 0 ? (
-                  allBrands.documents.map((e) => (
-                    <DashHomeInfuencers
-                      image={e.profile_img}
-                      name={e.name}
-                      currentUserDocumentId={currentUserDocumentId}
-                      cardDocumentId={e.$id}
-                      key={e.$id}
-                      cardUserKey={e.key}
-                    />
-                  ))
-                ) : (
-                  <p>No influencers found.</p>
-                )
-              ) : (
-                <p>Invalid data format for influencers.</p>
-              ))}
-          </div>
-        </div>
+        <BrandInfluencerProfiles
+          isInfluencer={isInfluencer}
+          allBrands={memoizedAllBrands}
+          allInfluencers={memoizedAllInfluencers}
+          currentUserDocumentId={currentUserDocumentId}
+        />
       </div>
     </div>
   );

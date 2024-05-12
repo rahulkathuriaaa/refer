@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import React from "react";
+import { useState, useMemo } from "react";
 import Sidebar from "./Sidebar";
 import DashHome from "./DashHome";
 import Products from "./Products";
@@ -10,36 +11,45 @@ import Settings from "./Settings";
 
 function DashboardComponent() {
   const [activePage, setActivePage] = useState("DashHomePage");
+
+  const RenderPage = useMemo(() => {
+    switch (activePage) {
+      case "DashHomePage":
+        return <DashHome />;
+      case "ProductsPage":
+        return <Products />;
+      case "InfluencersPage":
+        return <Influencers />;
+      case "ReportsPage":
+        return <Reports />;
+      case "CampaignsPage":
+        return <Campaigns />;
+      case "SettingsPage":
+        return <Settings />;
+      default:
+        return null;
+    }
+  }, [activePage]);
+
   return (
-    <Layout>
-      <div className="bg-[#1E2023]  w-[80%] min-h-screen overflow-y-auto flex">
-        <RenderPage />
+    <Layout setActivePage={setActivePage} activePage={activePage}>
+      <div className="bg-[#1E2023] w-[80%] min-h-screen overflow-y-auto flex">
+        {RenderPage}
       </div>
     </Layout>
   );
+}
 
-  function RenderPage() {
-    if (activePage == "DashHomePage") {
-      return <DashHome />;
-    }
-    if (activePage == "ProductsPage") {
-      return <Products />;
-    }
-    if (activePage == "InfluencersPage") {
-      return <Influencers />;
-    }
-    if (activePage == "ReportsPage") {
-      return <Reports />;
-    }
-    if (activePage == "CampaignsPage") {
-      return <Campaigns />;
-    }
-    if (activePage == "SettingsPage") {
-      return <Settings />;
-    }
-  }
-
-  function Layout({ children }: { children: React.ReactNode }) {
+const Layout = React.memo(
+  ({
+    children,
+    setActivePage,
+    activePage,
+  }: {
+    children: React.ReactNode;
+    setActivePage: Function;
+    activePage: string;
+  }) => {
     return (
       <div className="w-full flex">
         <div className="bg-[#1E2023] w-[20%]">
@@ -49,6 +59,6 @@ function DashboardComponent() {
       </div>
     );
   }
-}
+);
 
 export default DashboardComponent;
