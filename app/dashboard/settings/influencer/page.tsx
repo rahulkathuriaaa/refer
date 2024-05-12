@@ -8,7 +8,7 @@ import InfNotificationSettings from "@/components/dashboard/settings/influencers
 import ReferalCode from "@/components/dashboard/ReferalCode";
 
 function InfluencerSettings() {
-  const [activePage, setActivePage] = useState("AccountPage");
+  const [activePage, setActivePage] = useState("ProfilePage");
   return (
     <Layout>
       <div className="">
@@ -43,7 +43,7 @@ function InfluencerSettings() {
           />
           {children}
         </div>
-        <ReferalCode />
+  
       </div>
     );
   }

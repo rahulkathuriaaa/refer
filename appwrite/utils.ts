@@ -88,3 +88,53 @@ export async function updateBrandData() {
   console.log(data);
   return data;
 }
+
+type InfluencerData = {
+  documentId: string;
+  key: string;
+  name: string;
+  bio: string;
+  links: string;
+  niche: string;
+  main_platform: string;
+  follower_count: number;
+  connections: string;
+  publicKey: string;
+  //   setKey: (key: string) => void;
+  //   setName: (name: string) => void;
+  //   setBio: (bio: string) => void;
+  //   setLinks: (links: string) => void;
+  //   setNiche: (niche: string) => void;
+  //   setMain_platform: (mainPlatform: string) => void;
+  //   setFollower_count: (followerCounr: string) => void;
+};
+
+export async function updateInfluencerData() {
+  console.log(" INfluencer data update");
+  const documentId = useInfluencerData.getState().documentId;
+  const influencerData = {
+    documentId: useInfluencerData.getState().documentId,
+    key: usePublicKey.getState().key,
+    name: useInfluencerData.getState().name,
+    bio: useInfluencerData.getState().bio,
+
+    links: useInfluencerData.getState().links,
+    niche: useInfluencerData.getState().niche,
+    main_platform: useInfluencerData.getState().main_platform,
+    follower_count: useInfluencerData.getState().follower_count,
+    connections: useInfluencerData.getState().connections,
+    publicKey: useInfluencerData.getState().publicKey,
+    profile_img: useInfluencerData.getState().profile_img,
+  };
+
+  const data = await appwriteService.updateInfluencerData(
+    documentId,
+    influencerData.name,
+    influencerData.bio,
+    influencerData.niche,
+    influencerData.profile_img,
+    influencerData.follower_count
+  );
+  console.log(data);
+  return data;
+}

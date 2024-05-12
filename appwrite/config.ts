@@ -217,6 +217,26 @@ export class AppwriteService {
       console.error(e);
     }
   }
+  async updateInfluencerData(
+    collectionID: string,
+    name: string,
+    bio: string,
+    niche: string,
+    profile_img: string,
+    follower_count: string
+  ) {
+    try {
+      return database.updateDocument(
+        conf.appwriteDatabaseId,
+
+        conf.appwriteInfluencerId,
+        collectionID,
+        { name, bio, niche, profile_img, follower_count }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
   //temp
   async createBrande(brandData: any) {
     try {
@@ -236,7 +256,7 @@ export class AppwriteService {
       const res = await storage.createFile(bucketId, ID.unique(), file);
       //return res;
       const picUrl = await storage.getFileView(bucketId, res.$id);
-      console.log(picUrl)
+      console.log(picUrl);
       return picUrl;
     } catch (error) {
       console.log(error);

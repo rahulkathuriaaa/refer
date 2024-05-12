@@ -23,6 +23,7 @@ const DashHome = () => {
   const [data, setData] = useState();
   const [name, setName] = useState<string>();
   const [userDescription, setUserDescription] = useState<string>();
+  const [userLinks, setUserLinks] = useState(["a", ""]);
   const [profileImg, setProfileImg] = useState<string>(
     "/icons/ProfileIcon.svg"
   );
@@ -32,6 +33,15 @@ const DashHome = () => {
   const [currentUserDocumentId, setCurrentUserDocumentId] = useState<string>();
 
   const description = useBrandData((state) => state.description);
+  function splitString(str) {
+    // Remove leading/trailing whitespace and split the string by comma
+    const wordsArray = str.trim().split(",");
+
+    // Trim whitespace from each word in the array
+    const trimmedArray = wordsArray.map((word) => word.trim());
+
+    return trimmedArray;
+  }
   async function updateData(key: string) {
     const userType = await checkUserType(key);
     console.log(userType);
@@ -41,6 +51,7 @@ const DashHome = () => {
       setUserDescription(useBrandData.getState().description);
       setCurrentUserDocumentId(useBrandData.getState().documentId);
       setProfileImg(useBrandData.getState().profile_img);
+      setUserLinks(splitString(useBrandData.getState().links));
     }
     if (userType == "influencer") {
       setName(useInfluencerData.getState().name);
@@ -48,6 +59,7 @@ const DashHome = () => {
       setUserDescription(useInfluencerData.getState().bio);
       setCurrentUserDocumentId(useInfluencerData.getState().documentId);
       setProfileImg(useInfluencerData.getState().profile_img);
+      setUserLinks(useBrandData.getState().links);
     }
 
     console.log(currentUserDocumentId);
@@ -118,42 +130,61 @@ const DashHome = () => {
               </p>
 
               <div className="flex items-center gap-8 bg-[#232528] py-2 px-6 rounded-full w-fit">
-                <Image
-                  src={`/icons/instagram.svg`}
-                  width="25"
-                  height="100"
-                  alt="home fill"
-                />
-                <Image
-                  src={`/icons/facebook.svg`}
-                  width="25"
-                  height="100"
-                  alt="home fill"
-                />
-                <Image
-                  src={`/icons/linkedin.svg`}
-                  width="25"
-                  height="100"
-                  alt="home fill"
-                />
-                <Image
-                  src={`/icons/twitter.svg`}
-                  width="25"
-                  height="100"
-                  alt="home fill"
-                />
-                <Image
-                  src={`/icons/tiktok.svg`}
-                  width="25"
-                  height="100"
-                  alt="home fill"
-                />
-                <Image
-                  src={`/icons/WebsiteUrl.svg`}
-                  width="25"
-                  height="100"
-                  alt="home fill"
-                />
+                <a href={userLinks[0]} target="blank">
+                  <Image
+                    src={`/icons/instagram.svg`}
+                    width="25"
+                    height="100"
+                    alt="home fill"
+                  />
+                </a>
+                <a href={userLinks[1]} target="blank">
+                  <Image
+                    src={`/icons/facebook.svg`}
+                    width="25"
+                    height="100"
+                    alt="home fill"
+                  />
+                </a>
+                <a href={userLinks[4]} target="blank">
+                  <Image
+                    src={`/icons/linkedin.svg`}
+                    width="25"
+                    height="100"
+                    alt="home fill"
+                  />
+                </a>
+                <a href={userLinks[2]} target="blank">
+                  <Image
+                    src={`/icons/twitter.svg`}
+                    width="25"
+                    height="100"
+                    alt="home fill"
+                  />
+                </a>
+                <a href={userLinks[2]} target="blank">
+                  <Image
+                    src={`/icons/tiktok.svg`}
+                    width="25"
+                    height="100"
+                    alt="home fill"
+                  />
+                </a>
+                {!isInfluencer ? (
+                  <a
+                    href={"https://" + useBrandData.getState().website}
+                    target="blank"
+                  >
+                    <Image
+                      src={`/icons/WebsiteUrl.svg`}
+                      width="25"
+                      height="100"
+                      alt="home fill"
+                    />
+                  </a>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
 

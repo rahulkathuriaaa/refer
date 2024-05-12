@@ -11,6 +11,7 @@ type InfluencerData = {
   follower_count: number;
   connections: string;
   publicKey: string;
+  profile_img: string;
   //   setKey: (key: string) => void;
   //   setName: (name: string) => void;
   //   setBio: (bio: string) => void;
@@ -68,6 +69,7 @@ export const useInfluencerData = create<InfluencerData>((set) => ({
   follower_count: 0,
   connections: "",
   publicKey: "",
+  profile_img: "",
   setKey: (key: string) => {
     set(() => ({ key: key }));
   },

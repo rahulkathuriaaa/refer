@@ -1,9 +1,11 @@
 "use client";
 import SidebarItems from "./SidebarItems";
 import Link from "next/link";
+import { useBrandData, useIsInfluencer } from "@/store";
 import { useState } from "react";
 
 const Sidebar = (props: any) => {
+  const isInfluencer = useIsInfluencer.getState().isInfluencer;
   return (
     <div id="sidebar" className="bg-[#111111] h-[94vh] sticky top-[3%] mx-5">
       <div className="flex flex-col justify-around">
@@ -68,19 +70,35 @@ const Sidebar = (props: any) => {
             />
           </span>
 
-          <Link href="/dashboard/settings/brand">
-            <span
-              onClick={() => props.setActivePage("SettingsPage")}
-              className="cursor-pointer"
-            >
-              <SidebarItems
-                icon_name="Dash_Settings"
-                section_name="Admin Settings"
-                page_name="settings"
-                isActive={props.activePage == "SettingsPage"}
-              />
-            </span>
-          </Link>
+          {isInfluencer ? (
+            <Link href="/dashboard/settings/influencer">
+              <span
+                onClick={() => props.setActivePage("SettingsPage")}
+                className="cursor-pointer"
+              >
+                <SidebarItems
+                  icon_name="Dash_Settings"
+                  section_name="Admin Settings"
+                  page_name="settings"
+                  isActive={props.activePage == "SettingsPage"}
+                />
+              </span>
+            </Link>
+          ) : (
+            <Link href="/dashboard/settings/brand">
+              <span
+                onClick={() => props.setActivePage("SettingsPage")}
+                className="cursor-pointer"
+              >
+                <SidebarItems
+                  icon_name="Dash_Settings"
+                  section_name="Admin Settings"
+                  page_name="settings"
+                  isActive={props.activePage == "SettingsPage"}
+                />
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </div>

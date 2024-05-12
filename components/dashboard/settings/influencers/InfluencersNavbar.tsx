@@ -5,7 +5,7 @@ const InfluencersNavbar = (props: any) => {
   return (
     <div id="settingsnav" className="">
       <div className="flex NavItems-center gap-12 text-white">
-        <span
+        {/* <span
           onClick={() => props.setActivePage("AccountPage")}
           className="cursor-pointer"
         >
@@ -14,7 +14,7 @@ const InfluencersNavbar = (props: any) => {
             page_name="account"
             isActive={props.activePage == "AccountPage"}
           />
-        </span>
+        </span> */}
         <span
           onClick={() => props.setActivePage("ProfilePage")}
           className="cursor-pointer"
@@ -25,7 +25,7 @@ const InfluencersNavbar = (props: any) => {
             isActive={props.activePage == "ProfilePage"}
           />
         </span>
-        <span
+        {/* <span
           onClick={() => props.setActivePage("PaymentPage")}
           className="cursor-pointer"
         >
@@ -44,7 +44,7 @@ const InfluencersNavbar = (props: any) => {
             page_name="notification"
             isActive={props.activePage == "NotificationPage"}
           />
-        </span>
+        </span> */}
       </div>
     </div>
   );
