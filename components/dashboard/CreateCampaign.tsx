@@ -175,7 +175,7 @@ function CreateCampaign() {
     }
   };
 
-  const readFromContract = async () => {
+  const createCampaignContract = async () => {
     if (!primaryWallet) {
       console.log("primary wallet error");
     } else {
@@ -197,7 +197,9 @@ function CreateCampaign() {
           campaignAmount,
           campaignClaimRate,
         ],
-        gasLimit: ethers.utils.parseUnits("100", "gwei"),
+        // args: ["something", "some description", 100, 100, 1],
+        gas: 3000000,
+        // gasLimit: ethers.utils.parseUnits("1000", "gwei"),
       });
       console.log(data);
       return data;
@@ -299,7 +301,7 @@ function CreateCampaign() {
 
           <button
             onClick={async () => {
-              const res = await readFromContract();
+              const res = await createCampaignContract();
               console.log(res);
             }}
             className="py-3 bg-[#00B24F] text-white text-sm text-center w-[35%] rounded-lg cursor-pointer"

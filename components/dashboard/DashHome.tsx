@@ -107,6 +107,20 @@ const DashHome = () => {
   const [allBrands, setAllBrands] = useState();
   const [allInfluencers, setAllInfluencers] = useState();
   const [currentUserDocumentId, setCurrentUserDocumentId] = useState<string>();
+  const [balance, setBalance] = useState(0);
+
+  const { primaryWallet } = useDynamicContext();
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      if (primaryWallet) {
+        const value = await primaryWallet.connector.getBalance();
+        setBalance(value);
+        console.log(value);
+      }
+    };
+    fetchBalance();
+  }, [primaryWallet]);
 
   const splitString = useCallback((str) => {
     const wordsArray = str.trim().split(",");
@@ -196,6 +210,10 @@ const DashHome = () => {
               </p>
 
               <p className="text-[#909090]">Wallet Address: {walletAddress}</p>
+              <p className="text-[#909090]">
+                Matic Balance:
+                {balance ? Number(balance).toFixed(5) : ''}
+              </p>
               <p className="text-[#909090]">
                 {key ? userDescription : "Description"}
               </p>

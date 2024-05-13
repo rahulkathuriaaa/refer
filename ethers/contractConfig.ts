@@ -32,7 +32,7 @@ export const counterContractAbi = [
 //pa 0xCFeC6fC50cce2baf56FEb2A19bBBeCCE6BDb7416
 // as 0xA0806AF1533246BA9Db92F2CfAd3b013251F94C5
 export const tokenContractAddress =
-  "0xD9B27e12eA37e310c4c6f5473d64D08A0CCe0c4D";
+  "0x0376BC498606245d603B88aD45F8af27683Aeb00";
 export const tokenContractAbi = [
   {
     inputs: [],
@@ -364,7 +364,7 @@ export const tokenContractAbi = [
 // pa 0xce76F502cE90fdb53983134f23EF3228777747D1
 // as 0x9Dde0dbD80114F5912eb7A6147253C091E404864
 export const referFactoryContractAddress =
-  "0x4483098AD70D9b35ed884493E3C35CdB84F1028D";
+  "0x8a80c4fC9f421083D5a4ecC02aa6DD3C4399193D";
 export const referFactoryContractAbi = [
   {
     inputs: [],

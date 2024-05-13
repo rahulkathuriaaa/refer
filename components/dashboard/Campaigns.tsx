@@ -198,6 +198,7 @@ const Campaigns = () => {
           referFactoryContractAddress,
           ethers.utils.parseUnits("6000", 18), // Convert the amount to wei
         ],
+        gas: 3000000,
       });
       console.log(data);
       return data;
@@ -235,9 +236,8 @@ const Campaigns = () => {
         address: tokenContractAddress,
         abi: tokenContractAbi,
         functionName: "mintTo",
-        args: [
-          walletAddress, // Convert the amount to wei
-        ],
+        args: [walletAddress],
+        gas: 3000000,
       });
       console.log(data);
       return data;

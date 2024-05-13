@@ -94,6 +94,7 @@ const ClaimTokens = ({ campaignAddress }) => {
         abi: referFactoryContractAbi,
         functionName: "claim",
         args: [id],
+        gas: 3000000,
       });
       console.log(data);
       return data;
@@ -109,10 +110,10 @@ const ClaimTokens = ({ campaignAddress }) => {
     console.log(hasClaimed);
     setIsOpen(!isOpen);
   };
-  useState(async() => {
+  useState(async () => {
     const hasClaimed = await getClaimStatus();
     setHasClaimed(hasClaimed);
-  },[]);
+  }, []);
 
   return (
     <div className="">

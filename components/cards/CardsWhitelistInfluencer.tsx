@@ -206,6 +206,7 @@ const CardsWhitelistInfluencer = ({
         abi: referFactoryContractAbi,
         functionName: "whitelistUsers",
         args: [campaignId, influencerAddress],
+        gas: 3000000,
       });
       console.log(data);
       return data;
@@ -253,6 +254,7 @@ const CardsWhitelistInfluencer = ({
         abi: referFactoryContractAbi,
         functionName: "markAsEligibleToClaim",
         args: [campaignId, influencerAddress],
+        gas: 3000000,
       });
       console.log(data);
       return data;
