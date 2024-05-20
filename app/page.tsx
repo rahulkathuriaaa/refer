@@ -10,6 +10,7 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import appwriteService from "@/appwrite/config";
 import { usePublicKey } from "@/store";
 import Footer from "@/components/landing/Footer";
+import JoinWaitlistPop from "@/components/landing/JoinWaitlistPop";
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
       <div className="w-full">
         <Footer />
       </div>
+      <JoinWaitlistPop />
     </main>
   );
 }
