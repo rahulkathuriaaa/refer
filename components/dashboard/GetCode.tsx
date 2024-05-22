@@ -3,21 +3,43 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { generateDiscountCode } from "../../utils";
+import { useBrandData } from "@/store";
+import { ethers } from "ethers";
+import {
+  Account,
+  Chain,
+  Hex,
+  Transport,
+  WalletClient,
+  PublicClient,
+  parseEther,
+  readContract,
+  getContract,
+} from "viem";
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import {
+  campaignContractAbi,
+  counterContractAbi,
+  counterContractAddress,
+  tokenContractAbi,
+  tokenContractAddress,
   referFactoryContractAddress,
   referFactoryContractAbi,
-  campaignContractAbi,
 } from "@/ethers/contractConfig";
-
-const ClaimTokens = ({ code, campaignAddress }) => {
+import appwriteService from "@/appwrite/config";
+const GetCode = ({ address, contractAddress }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasClaimed, setHasClaimed] = useState(true);
+  const [code, setCode] = useState("Generating ..");
   const { primaryWallet } = useDynamicContext();
   const { user } = useDynamicContext();
   const walletAddress = user?.verifiedCredentials[0].address;
-  // const isInfluencer = useIsInfluencer.getState().isInfluencer;
-
   const getSigner = async () => {
     return await primaryWallet.connector.getSigner<
       WalletClient<Transport, Chain, Account>
@@ -27,32 +49,38 @@ const ClaimTokens = ({ code, campaignAddress }) => {
     return await primaryWallet.connector.getPublicClient<PublicClient>();
   };
 
-  const getCampaignId = async () => {
-    if (!primaryWallet) {
-      console.log("primary wallet error");
-    } else {
-      console.log(primaryWallet);
-    }
-
-    const provider = await getProvider();
-    console.log(provider);
-    console.log(campaignAddress);
-
-    try {
-      const data = await provider.readContract({
-        address: referFactoryContractAddress,
-        abi: referFactoryContractAbi,
-        functionName: "campaignToId",
-        args: [campaignAddress],
-      });
-      console.log("ID for camaoign address", campaignAddress, "is", data);
-      return Number(String(data));
-    } catch (error) {
-      console.log("error getting campaign ID", error);
-    }
+  const togglePopup = async () => {
+    // console.log(address.address);
+    // const { shopifyToken, shopifyStore } = await webStoreData();
+    // console.log("data passed to handle gen code ", shopifyStore, shopifyToken);
+    // handleCodeGeneration(shopifyToken, shopifyStore);
+    const res = await checkAlreadyGeneratedCode();
+    setCode(res);
+    setIsOpen(!isOpen);
   };
 
-  const getClaimStatus = async () => {
+  const handleCodeGeneration = async (shopifyToken, shopifyStore) => {
+    const res = await generateDiscountCode(
+      20,
+      "ll",
+      shopifyToken,
+      shopifyStore
+    );
+    registerCodeToSmartContract(res.code);
+    setCode(res.code);
+  };
+  const webStoreData = async () => {
+    const res = await appwriteService.getBrandWebStoreKey(address.address);
+    console.log(res);
+    console.log(res.documents[0].api_key);
+    const data = {
+      shopifyToken: res.documents[0].api_key,
+      shopifyStore: res.documents[0].website,
+    }; //api_key website
+    console.log(data);
+    return data;
+  };
+  const checkAlreadyGeneratedCode = async () => {
     if (!primaryWallet) {
       console.log("primary wallet error");
     } else {
@@ -61,59 +89,23 @@ const ClaimTokens = ({ code, campaignAddress }) => {
 
     const provider = await getProvider();
     console.log(provider);
-    console.log(campaignAddress);
 
     try {
       const data = await provider.readContract({
-        address: campaignAddress,
+        address: contractAddress,
         abi: campaignContractAbi,
-        functionName: "claimed",
+        functionName: "returnGeneratedCode",
         args: [walletAddress],
-      });
-      console.log("claim status", data);
-      return data;
-    } catch (error) {
-      console.log("error checking if inbfluencer has already claimed", error);
-    }
-  };
-
-  const makeClaim = async (id) => {
-    if (!primaryWallet) {
-      console.log("primary wallet error");
-    } else {
-      console.log(primaryWallet);
-    }
-
-    const signer = await getSigner();
-    console.log(signer);
-    const campaignId = await getCampaignId();
-
-    try {
-      const data = await signer.writeContract({
-        address: campaignAddress,
-        abi: campaignContractAbi,
-        functionName: "releaseClaimedFundsToInfluencer",
-        args: [code, 10],
-        gas: 3000000,
       });
       console.log(data);
       return data;
     } catch (error) {
-      console.log("error whiteListing influencer ", error);
+      console.log(
+        "error getting if influencer has already generated code ",
+        error
+      );
     }
   };
-
-  const togglePopup = async () => {
-    const id = await getCampaignId();
-    const res = await makeClaim(id);
-
-    console.log(hasClaimed);
-    setIsOpen(!isOpen);
-  };
-  useState(async () => {
-    const hasClaimed = await getClaimStatus();
-    setHasClaimed(hasClaimed);
-  }, []);
 
   return (
     <div className="">
@@ -123,9 +115,9 @@ const ClaimTokens = ({ code, campaignAddress }) => {
         }}
         className="px-4 py-2 border rounded-lg"
       >
-        Claim Tokens
+        Get Code
       </button>
-      {/* {isOpen && (
+      {isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-40 backdrop-blur-[4px] z-10">
           <div className="bg-[#7EE5A1] px-6 py-10 rounded-[0.6rem] flex flex-col gap-6 w-[50%] justify-center items-center shadow-lg">
             <button
@@ -152,9 +144,9 @@ const ClaimTokens = ({ code, campaignAddress }) => {
             </h1>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
 
-export default ClaimTokens;
+export default GetCode;

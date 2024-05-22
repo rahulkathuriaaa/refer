@@ -32,7 +32,7 @@ export const counterContractAbi = [
 //pa 0xCFeC6fC50cce2baf56FEb2A19bBBeCCE6BDb7416
 // as 0xA0806AF1533246BA9Db92F2CfAd3b013251F94C5
 export const tokenContractAddress =
-  "0x0376BC498606245d603B88aD45F8af27683Aeb00";
+  "0xc7B4fEb57eaDDD5A48786daF64f191F258157aA1";
 export const tokenContractAbi = [
   {
     inputs: [],
@@ -364,7 +364,7 @@ export const tokenContractAbi = [
 // pa 0xce76F502cE90fdb53983134f23EF3228777747D1
 // as 0x9Dde0dbD80114F5912eb7A6147253C091E404864
 export const referFactoryContractAddress =
-  "0x8a80c4fC9f421083D5a4ecC02aa6DD3C4399193D";
+  "0xc62904C4bB415a20c210500545D1ED003B127aA7";
 export const referFactoryContractAbi = [
   {
     inputs: [],
@@ -759,6 +759,30 @@ export const referFactoryContractAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_campaignId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "_influencer",
+        type: "address",
+      },
+    ],
+    name: "returnGeneratedCode",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "token",
     outputs: [
@@ -944,6 +968,25 @@ export const campaignContractAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    name: "codeToTimesClaimed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "description",
     outputs: [
@@ -1015,6 +1058,24 @@ export const campaignContractAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_code",
+        type: "string",
+      },
+    ],
+    name: "generateReferCode",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "getOwner",
     outputs: [
@@ -1048,6 +1109,25 @@ export const campaignContractAbi = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "influencerToReferCode",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -1131,10 +1211,66 @@ export const campaignContractAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_code",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_timesCodeUsed",
+        type: "uint256",
+      },
+    ],
+    name: "releaseClaimedFundsToInfluencer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_code",
+        type: "string",
+      },
+    ],
+    name: "returnCodeToTimesClaimed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "returnGeneratedCode",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -1159,6 +1295,24 @@ export const campaignContractAbi = [
       },
     ],
     name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_code",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_value",
+        type: "uint256",
+      },
+    ],
+    name: "updateCodeToTimesClaimed",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

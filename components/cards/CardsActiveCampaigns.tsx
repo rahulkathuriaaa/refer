@@ -7,6 +7,8 @@ import { ethers } from "ethers";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useIsInfluencer } from "@/store";
 import ReferalCode from "@/components/dashboard/ReferalCode";
+import GenCode from "../dashboard/GenCode";
+import GetCode from "../dashboard/GetCode";
 import ClaimTokens from "@/components/dashboard/ClaimTokens";
 
 import {
@@ -43,6 +45,7 @@ const CardsActiveCampaigns = ({
   const [remainingBalance, setRemainingBalance] = useState();
   const [allBrands, setAllBrands] = useState();
   const [allInfluencers, setAllInfluencers] = useState();
+  const [alreadyGeneratedCode, setAlreadyGeneratedCode] = useState();
   const [isInfluencerEligibleToClaim, setIsInfluencerEligibleToClaim] =
     useState(false);
 
@@ -80,6 +83,32 @@ const CardsActiveCampaigns = ({
       return data;
     } catch (error) {
       console.log("error getting if eligible to claim ", error);
+    }
+  };
+  const checkAlreadyGeneratedCode = async () => {
+    if (!primaryWallet) {
+      console.log("primary wallet error");
+    } else {
+      console.log(primaryWallet);
+    }
+
+    const provider = await getProvider();
+    console.log(provider);
+
+    try {
+      const data = await provider.readContract({
+        address: contractAddress,
+        abi: campaignContractAbi,
+        functionName: "returnGeneratedCode",
+        args: [walletAddress],
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(
+        "error getting if influencer has already generated code ",
+        error
+      );
     }
   };
 
@@ -133,10 +162,16 @@ const CardsActiveCampaigns = ({
     const fetchData = async () => {
       const data = await getAmountData();
       const isEligible = await isEligibleToClaim();
-      console.log(isEligible)
+      const hasAlreadyGeneratedCode = await checkAlreadyGeneratedCode();
+      console.log(isEligible);
       setIsInfluencerEligibleToClaim(isEligible);
       console.log(data);
       updateAllUsersData();
+      console.log(
+        "has influencer already generated code ?",
+        hasAlreadyGeneratedCode
+      );
+      setAlreadyGeneratedCode(hasAlreadyGeneratedCode);
     };
 
     fetchData();
@@ -174,12 +209,21 @@ const CardsActiveCampaigns = ({
           </div>
         </div>
         <div className="flex items-center gap-6">
-        {!isInfluencerEligibleToClaim ? (
+          {!isInfluencer ? (
             <></>
           ) : (
-            <ClaimTokens campaignAddress={contractAddress}></ClaimTokens>
+            <ClaimTokens
+              code={alreadyGeneratedCode}
+              campaignAddress={contractAddress}
+            ></ClaimTokens>
           )}
-          {!isInfluencer ? (
+          {isInfluencer ? (
+            !alreadyGeneratedCode ? (
+              <GenCode address={address} contractAddress={contractAddress} />
+            ) : (
+              <GetCode address={address} contractAddress={contractAddress} />
+            )
+          ) : (
             <button
               className={`text-[#27E0A6]`}
               onClick={() => {
@@ -188,10 +232,7 @@ const CardsActiveCampaigns = ({
             >
               Whitelist Influencer
             </button>
-          ) : (
-            <ReferalCode address={address}></ReferalCode>
           )}
-          
 
           {view ? "" : <ClaimTokens></ClaimTokens>}
           {whitelist ? (

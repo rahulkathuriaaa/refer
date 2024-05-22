@@ -41,7 +41,7 @@ export default function Home() {
       <div className="w-full">
         <Footer />
       </div>
-      <JoinWaitlistPop />
+      {/* <JoinWaitlistPop /> */}
     </main>
   );
 }

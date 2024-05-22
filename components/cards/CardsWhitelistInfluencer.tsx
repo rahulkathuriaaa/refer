@@ -304,22 +304,25 @@ const CardsWhitelistInfluencer = ({
         </div>
         <div className="flex justify-end items-center pt-4">
           {isInfluencerWhitelisted ? (
-            <div>
-              {!isInfluencerEligibleToClaim ? (
-                <button
-                  onClick={() => {
-                    makeInfluencerEligibleToClaim();
-                  }}
-                  className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]"
-                >
-                  Make Eligible To claim
-                </button>
-              ) : (
-                <button className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]">
-                  Eligible To Claim
-                </button>
-              )}
-            </div>
+            // <div>
+            //   {!isInfluencerEligibleToClaim ? (
+            //     <button
+            //       onClick={() => {
+            //         makeInfluencerEligibleToClaim();
+            //       }}
+            //       className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]"
+            //     >
+            //       Make Eligible To claim
+            //     </button>
+            //   ) : (
+            //     <button className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]">
+            //       Eligible To Claim
+            //     </button>
+            //   )}
+            // </div>
+            <button className="text-sm py-2 px-4 rounded-xl text-white bg-[#00B24F]">
+              Whitelisted
+            </button>
           ) : (
             <button
               onClick={() => {
