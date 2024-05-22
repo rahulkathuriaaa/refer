@@ -68,7 +68,7 @@ const GenCode = ({ address, contractAddress }) => {
     setCode(res.code);
   };
   const webStoreData = async () => {
-    const res = await appwriteService.getBrandWebStoreKey(address.address);
+    const res = await appwriteService.getBrandWebStoreKey(address);
     console.log(res);
     console.log(res.documents[0].api_key);
     const data = {

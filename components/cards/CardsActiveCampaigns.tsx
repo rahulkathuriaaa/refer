@@ -211,11 +211,14 @@ const CardsActiveCampaigns = ({
         <div className="flex items-center gap-6">
           {!isInfluencer ? (
             <></>
-          ) : (
+          ) : alreadyGeneratedCode ? (
             <ClaimTokens
-              code={alreadyGeneratedCode}
+              address={address}
+              codee={alreadyGeneratedCode}
               campaignAddress={contractAddress}
             ></ClaimTokens>
+          ) : (
+            <></>
           )}
           {isInfluencer ? (
             !alreadyGeneratedCode ? (
