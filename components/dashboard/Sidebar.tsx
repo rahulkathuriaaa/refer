@@ -33,18 +33,31 @@ const Sidebar = (props: any) => {
               isActive={props.activePage == "ProductsPage"}
             />
           </span>
-
-          <span
-            onClick={() => props.setActivePage("InfluencersPage")}
-            className="cursor-pointer"
-          >
-            <SidebarItems
-              icon_name="Dash_Influencers"
-              section_name="Influencers"
-              page_name="influencers"
-              isActive={props.activePage == "InfluencersPage"}
-            />
-          </span>
+          {!isInfluencer ? (
+            <span
+              onClick={() => props.setActivePage("InfluencersPage")}
+              className="cursor-pointer"
+            >
+              <SidebarItems
+                icon_name="Dash_Influencers"
+                section_name="Influencers"
+                page_name="influencers"
+                isActive={props.activePage == "InfluencersPage"}
+              />
+            </span>
+          ) : (
+            <span
+              onClick={() => props.setActivePage("BrandsPage")}
+              className="cursor-pointer"
+            >
+              <SidebarItems
+                icon_name="Dash_Influencers"
+                section_name="Brands"
+                page_name="Brands"
+                isActive={props.activePage == "BrandsPage"}
+              />
+            </span>
+          )}
 
           <span
             onClick={() => props.setActivePage("ReportsPage")}

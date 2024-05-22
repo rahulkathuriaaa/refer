@@ -1,28 +1,20 @@
 // @ts-nocheck
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+
 import {
   Account,
   Chain,
-  Hex,
+
   Transport,
   WalletClient,
   PublicClient,
-  parseEther,
-  readContract,
-  getContract,
+
 } from "viem";
-import {
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from "wagmi";
+
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import {
-  referFactoryContractAddress,
-  referFactoryContractAbi,
+
   campaignContractAbi,
 } from "@/ethers/contractConfig";
 import { getDiscountCodeUpdate } from "../../utils";
@@ -63,9 +55,7 @@ const ClaimTokens = ({ address, codee, campaignAddress }) => {
       "code for which referals are being claimed",
       alreadyGeneratedCode
     );
-    console.log("temp 1111111111", campaignAddress);
-    console.log("temp 1111111111", campaignContractAbi);
-    console.log("temp 1111111111", alreadyGeneratedCode);
+
 
     try {
       const data = await signer.writeContract({
@@ -73,7 +63,7 @@ const ClaimTokens = ({ address, codee, campaignAddress }) => {
         abi: campaignContractAbi,
         functionName: "releaseClaimedFundsToInfluencer",
         args: [alreadyGeneratedCode, referalsAlreadyClaimed + 50],
-        gas: 5000000,
+        gas: 3000000,
       });
       //  console.log(data);
       return data;

@@ -2,16 +2,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
-import CardsInfluencersForBrands from "../cards/CardsInfluencersForBrands";
+import CardsBrandsForInfluencers from "../cards/CardsBrandsForInfluencers";
 import appwriteService from "@/appwrite/config";
 import Image from "next/image";
 
-function Influencers() {
-  const [allInfluencers, setAllInfluencers] = useState();
+function Brands() {
+  const [allBrands, setAllBrands] = useState();
   const fetchAllInfluencers = async () => {
-    const allInfluencers = await appwriteService.getAllInfluencers();
-    setAllInfluencers(allInfluencers);
-    console.log(allInfluencers);
+    const allBrands = await appwriteService.getAllBrands();
+    setAllBrands(allBrands);
+    console.log(allBrands);
   };
   useEffect(() => {
     fetchAllInfluencers();
@@ -19,7 +19,7 @@ function Influencers() {
   return (
     <div className="w-[98%] flex flex-col pt-10 pb-6 gap-6">
       <div className="text-white flex justify-between">
-        <p className="text-3xl font-semibold">Influencers Portfolio</p>
+        <p className="text-3xl font-semibold">Brands Portfolio</p>
         <div className="w-[40%] flex justify-end">
           <div className="flex justify-center items-center text-white border-white w-[50%] bg-black  rounded-full px-2">
             <Image
@@ -50,14 +50,13 @@ function Influencers() {
                   cardUserKey={e.key}
                 />
               ))))} */}
-        {allInfluencers &&
-          allInfluencers.documents.map((e) => (
-            <CardsInfluencersForBrands
+        {allBrands &&
+          allBrands.documents.map((e) => (
+            <CardsBrandsForInfluencers
               key={e.key}
               image={e.profile_img}
               name={e.name}
-              description={e.bio}
-              followers={e.follower_count}
+              description={e.description}
             />
           ))}
 
@@ -114,4 +113,4 @@ function Influencers() {
   );
 }
 
-export default Influencers;
+export default Brands;

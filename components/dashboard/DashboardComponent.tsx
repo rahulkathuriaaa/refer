@@ -8,9 +8,12 @@ import Products from "./Products";
 import Influencers from "./Influencers";
 import Reports from "./Reports";
 import Campaigns from "./Campaigns";
+import Brands from "./Brands";
+
 import Settings from "./Settings";
 
 function DashboardComponent() {
+
   const [activePage, setActivePage] = useState("DashHomePage");
 
   const RenderPage = useMemo(() => {
@@ -21,6 +24,8 @@ function DashboardComponent() {
         return <Products />;
       case "InfluencersPage":
         return <Influencers />;
+      case "BrandsPage":
+        return <Brands />;
       case "ReportsPage":
         return <Reports />;
       case "CampaignsPage":
