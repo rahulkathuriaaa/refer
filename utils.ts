@@ -154,6 +154,33 @@ export async function generateDiscountCode(
     console.error("Error creating discount code:", error);
   }
 }
+export async function getProductsForBrand(
+  accessToken: string,
+  shopName: string
+) {
+  try {
+    const response = await fetch("/api/getProductsForBrand", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        accessToken: accessToken,
+        shopName: shopName,
+      }),
+    });
+    console.log(response);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } else {
+      console.log("An error occurred while fetching products from store");
+    }
+  } catch (error) {
+    console.error("Error creating discount code:", error);
+  }
+}
 export async function getDiscountCodeUpdate(
   percentage: number,
   code: string,

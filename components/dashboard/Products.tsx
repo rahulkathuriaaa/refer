@@ -1,9 +1,27 @@
+"use client";
+import { useState, useEffect } from "react";
 import React from "react";
 import Image from "next/image";
 import CardsProductForBrands from "../cards/CardsProductForBrands";
 import CardsRecentOrders from "../cards/CardsRecentOrders";
+import { useBrandProducts } from "@/hooks/useBrandProducts";
 
 function Products() {
+  const { storeUrl, products } = useBrandProducts();
+  const [isProductsLoaded, setIsProductsLoaded] = useState(false);
+  const [productArray, setProductArray] = useState([]);
+
+  useEffect(() => {
+    if (products) {
+      setIsProductsLoaded(true);
+      setProductArray(products.products);
+    }
+  }, [products]);
+
+  if (isProductsLoaded) {
+    // console.log(productArray[0].image.src);
+    // console.log(storeUrl);
+  }
   return (
     <div className="flex w-[98%] py-4">
       <div className="flex flex-col justify-center items-center gap-8 w-full">
@@ -12,29 +30,22 @@ function Products() {
             <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
               <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
                 <p>Top Selling Product</p>
-                <p>View all products &#62;</p>
+                {/* <p>View all products &#62;</p> */}
               </div>
               <div className="flex gap-4 flex-wrap">
-                <CardsProductForBrands
-                  image={"Mobile1.svg"}
-                  name="Techno Pova"
-                />
-                <CardsProductForBrands
-                  image={"Mobile2.svg"}
-                  name="Techno Spark"
-                />
-                <CardsProductForBrands
-                  image={"Mobile3.svg"}
-                  name="Realme Narzo"
-                />
-                <CardsProductForBrands
-                  image={"Mobile4.svg"}
-                  name="Redmi Note 12"
-                />
-                <CardsProductForBrands
-                  image={"Mobile5.svg"}
-                  name="Redmi 13 C"
-                />
+                {isProductsLoaded ? (
+                  productArray.map((e) => (
+                    <CardsProductForBrands
+                      key={e.handle}
+                      image={e.image.src}
+                      name={e.title}
+                      link={"https://" + storeUrl + "/products/" + e.handle}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+
                 {/* <CardsProductForBrands image={"Product1.svg"} name="Yamaha Bike" /> */}
               </div>
             </div>
@@ -79,7 +90,7 @@ function Products() {
             <CardsRecentOrders image={`Recent5.svg`} name="Product 05" />
             <CardsRecentOrders image={`Recent6.svg`} name="Product 06" />
             <CardsRecentOrders image={`Recent7.svg`} name="Product 07" />
-          </div>  
+          </div>
         </div>
       </div>
     </div>
