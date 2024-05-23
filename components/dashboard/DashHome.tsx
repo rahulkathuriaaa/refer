@@ -1,7 +1,6 @@
 // @ts-nocheck
 "use client";
-import React from "react";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DashHomeInfuencers from "../cards/DashHomeInfuencers";
@@ -18,7 +17,7 @@ import {
 
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
-const TopSellingProducts = React.memo(function TopSellingProducts() {
+const TopSellingProducts = () => {
   return (
     <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
       <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
@@ -34,14 +33,14 @@ const TopSellingProducts = React.memo(function TopSellingProducts() {
       </div>
     </div>
   );
-});
+};
 
-const BrandInfluencerProfiles = React.memo(function BrandInfluencerProfiles({
+const BrandInfluencerProfiles = ({
   isInfluencer,
   allBrands,
   allInfluencers,
   currentUserDocumentId,
-}) {
+}) => {
   return (
     <div className="bg-[#111111] p-6 w-full rounded-xl flex flex-col gap-6">
       <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
@@ -92,7 +91,7 @@ const BrandInfluencerProfiles = React.memo(function BrandInfluencerProfiles({
       </div>
     </div>
   );
-});
+};
 
 const DashHome = () => {
   const isInfluencer = useIsInfluencer((state) => state.isInfluencer);
@@ -166,7 +165,7 @@ const DashHome = () => {
 
   const { user } = useDynamicContext();
   if (loading) return <>Fetching....</>;
-  const walletAddress = user?.verifiedCredentials[0].address;
+  const walletAddress = user?.verifiedCredentials[0]?.address;
 
   return (
     <div className="flex w-[98%] py-4">
@@ -212,7 +211,7 @@ const DashHome = () => {
               <p className="text-[#909090]">Wallet Address: {walletAddress}</p>
               <p className="text-[#909090]">
                 Matic Balance:
-                {balance ? Number(balance).toFixed(5) : ''}
+                {balance ? Number(balance).toFixed(5) : ""}
               </p>
               <p className="text-[#909090]">
                 {key ? userDescription : "Description"}
