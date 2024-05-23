@@ -22,17 +22,21 @@ const Sidebar = (props: any) => {
             />
           </span>
 
-          <span
-            onClick={() => props.setActivePage("ProductsPage")}
-            className="cursor-pointer"
-          >
-            <SidebarItems
-              icon_name="Dash_Product"
-              section_name="Products"
-              page_name="products"
-              isActive={props.activePage == "ProductsPage"}
-            />
-          </span>
+          {!isInfluencer ? (
+            <span
+              onClick={() => props.setActivePage("ProductsPage")}
+              className="cursor-pointer"
+            >
+              <SidebarItems
+                icon_name="Dash_Product"
+                section_name="Products"
+                page_name="products"
+                isActive={props.activePage == "ProductsPage"}
+              />
+            </span>
+          ) : (
+            <></>
+          )}
           {!isInfluencer ? (
             <span
               onClick={() => props.setActivePage("InfluencersPage")}

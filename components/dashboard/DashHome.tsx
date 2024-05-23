@@ -8,6 +8,7 @@ import CardsInfluencersForBrands from "../cards/CardsInfluencersForBrands";
 import CardsProductForBrands from "../cards/CardsProductForBrands";
 import { checkUserType } from "@/appwrite/utils";
 import appwriteService from "@/appwrite/config";
+import { useBrandProducts } from "@/hooks/useBrandProducts";
 import {
   useBrandData,
   useInfluencerData,
@@ -18,6 +19,15 @@ import {
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 const TopSellingProducts = () => {
+  const { storeUrl, products } = useBrandProducts();
+  const [isProductsLoaded, setIsProductsLoaded] = useState(false);
+  const [productArray, setProductArray] = useState([]);
+  useEffect(() => {
+    if (products) {
+      setIsProductsLoaded(true);
+      setProductArray(products.products);
+    }
+  }, [products]);
   return (
     <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
       <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
@@ -25,11 +35,18 @@ const TopSellingProducts = () => {
         <p>View all products &#62;</p>
       </div>
       <div className="flex gap-4 flex-wrap">
-        <CardsProductForBrands image={"Product1.svg"} name="Yamaha Bike" />
-        <CardsProductForBrands image={"Product2.svg"} name="Yamaha Bike" />
-        <CardsProductForBrands image={"Product3.svg"} name="Yamaha Bike" />
-        <CardsProductForBrands image={"Product4.svg"} name="Yamaha Bike" />
-        <CardsProductForBrands image={"Product1.svg"} name="Yamaha Bike" />
+        {isProductsLoaded ? (
+          productArray.map((e) => (
+            <CardsProductForBrands
+              key={e.handle}
+              image={e.image.src}
+              name={e.title}
+              link={"https://" + storeUrl + "/products/" + e.handle}
+            />
+          ))
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
@@ -276,7 +293,7 @@ const DashHome = () => {
               </div>
             </div>
 
-            <TopSellingProducts />
+            {!isInfluencer ? <TopSellingProducts /> : <></>}
           </div>
 
           <div className="w-[25%] h-full">
