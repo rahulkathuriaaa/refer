@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { useState } from "react";
 import React from "react";
 import Image from "next/image";
 import CardsWhitelistInfluencer from "../cards/CardsWhitelistInfluencer";
@@ -8,30 +9,30 @@ function WhitelistInfluencer({
   camapignAddresses,
   remainingBalance,
 }) {
-  console.log("from whilelist page");
+  const [searchQuery, setSearchQuery] = useState("");
+  // console.log("from whilelist page");
   //  console.log(addresses.addresses.documents[0].name);
   //console.log(addresses.documents);
-  console.log(allInfluencers);
-  console.log("remaining balance is ", remainingBalance);
-  allInfluencers?.documents.map((infAdd) => console.log(infAdd.publicKey));
-
+  // console.log(allInfluencers);
+  // console.log("remaining balance is ", remainingBalance);
+  // allInfluencers?.documents.map((infAdd) => console.log(infAdd.publicKey));
+  const filteredInfluencers = allInfluencers?.documents.filter((influencer) =>
+    influencer.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <>
       <div className="w-[98%] flex flex-col gap-10 py-6 pl-4">
         <div className="flex flex-col gap-2">
-          <h2 className="text-white text-5xl font-semibold">
-            Whitelist Influencers
-          </h2>
+          <h2 className="text-white text-5xl font-semibold">Whitelist Influencers</h2>
           <p className="text-[#909090] text-sm font-medium">
-            Allot upfront budget to influencers you like and we will send them
-            request to join the campaign
+            Allot upfront budget to influencers you like and we will send them request to join the campaign
           </p>
         </div>
 
         <div className="flex flex-col gap-2">
           <p className="text-[#909090] text-xl">Search</p>
           <div className="flex">
-            <div className="flex items-center text-white border-white w-[60%] bg-[#27292D]  rounded-xl px-2 gap-3">
+            <div className="flex items-center text-white border-white w-[60%] bg-[#27292D] rounded-xl px-2 gap-3">
               <Image
                 src="/search.svg"
                 width="252"
@@ -43,6 +44,8 @@ function WhitelistInfluencer({
                 type="text"
                 placeholder="Enter influencer’s name or wallet address"
                 className="text-white h-[2.5rem] w-[90%] rounded-xl border-white bg-[#27292D] px-2 outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           </div>
@@ -73,22 +76,20 @@ function WhitelistInfluencer({
                 </p>
               </div>
             </div>
-            {allInfluencers?.documents.map((infAdd) => (
+            {filteredInfluencers?.map((infAdd) => (
               <div key={infAdd.publicKey}>
-                {
-                  <CardsWhitelistInfluencer
-                    key={infAdd.publicKey}
-                    campaignAddress={camapignAddresses}
-                    influencerAddress={infAdd.publicKey}
-                    image={infAdd.profile_img}
-                    name={infAdd.name}
-                  />
-                }
+                <CardsWhitelistInfluencer
+                  key={infAdd.publicKey}
+                  campaignAddress={camapignAddresses}
+                  influencerAddress={infAdd.publicKey}
+                  image={infAdd.profile_img}
+                  name={infAdd.name}
+                />
               </div>
             ))}
 
             <div className="w-full bg-[#2D2D2D] px-6 py-3 flex items-center justify-center text-center rounded-b-xl">
-              <p className="text-gray-400">Showing 6 of 6 people</p>
+              <p className="text-gray-400">Showing {filteredInfluencers?.length} of {allInfluencers?.documents.length} people</p>
             </div>
           </div>
 
