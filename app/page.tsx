@@ -13,6 +13,7 @@ import Footer from "@/components/landing/Footer";
 import JoinWaitlistPop from "@/components/landing/JoinWaitlistPop";
 
 export default function Home() {
+
   return (
     <main className="bg-[#111111] flex min-h-screen flex-col items-center justify-between">
       <div
@@ -41,7 +42,7 @@ export default function Home() {
       <div className="w-full">
         <Footer />
       </div>
-      {/* <JoinWaitlistPop /> */}
+      <JoinWaitlistPop />
     </main>
   );
 }

@@ -81,6 +81,18 @@ export class AppwriteService {
       console.log(error);
     }
   }
+  async addToWaitlist(email: string) {
+    try {
+      return database.createDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteWhitelistId,
+        ID.unique(),
+        {email}
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async createChat(message: any) {
     try {

@@ -212,3 +212,10 @@ export async function getDiscountCodeUpdate(
     console.error("Error creating discount code:", error);
   }
 }
+export async function addToWhitelistEmails(email: type) {
+  try {
+    return await appwriteService.addToWaitlist(email);
+  } catch (error) {
+    console.log(error);
+  }
+}

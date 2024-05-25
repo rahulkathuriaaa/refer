@@ -2,12 +2,21 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { addToWhitelistEmails } from "@/utils";
 
 const JoinWaitlistPop = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [email, setEmail] = useState("");
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
+  };
+
+  const addEmailToWhitelist = async () => {
+    const res = await addToWhitelistEmails(email);
+    if (res) {
+      setIsOpen(!isOpen);
+    }
   };
 
   return (
@@ -30,13 +39,19 @@ const JoinWaitlistPop = () => {
             <input
               type="email"
               name="joinwaitlist"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
               placeholder="Enter Your Email"
               className="bg-[#ffffff36] join-bg outline-none px-4 py-1 md:py-3 rounded-lg flex justify-center w-[75%] md:w-[50%] text-white text-sm md:text-lg"
             />
             <button
               type="submit"
               className="text-black hover:text-white bg-white hover:bg-black py-1 md:py-2 rounded-lg md:rounded-xl w-[60%] md:w-[25%] text-sm md:text-lg font-medium md:font-semibold"
-              onClick={togglePopup}
+              onClick={() => {
+                addEmailToWhitelist();
+              }}
             >
               Join Waitlist
             </button>
