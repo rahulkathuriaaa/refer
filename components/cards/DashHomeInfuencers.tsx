@@ -93,6 +93,7 @@ const DashHomeInfuencers: React.FC<DashHomeInfuencersProps> = ({
       ? `${currentUserKey}-${cardUserKey}-${currentUserKey}`
       : `${currentUserKey}-${currentUserKey}-${cardUserKey}`;
     setRoomId(chatUrl);
+    console.log("chat url", chatUrl);
     setIsChatOpen(!isChatOpen);
   };
 

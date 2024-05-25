@@ -87,7 +87,7 @@ export class AppwriteService {
         conf.appwriteDatabaseId,
         conf.appwriteWhitelistId,
         ID.unique(),
-        {email}
+        { email }
       );
     } catch (error) {
       console.log(error);
