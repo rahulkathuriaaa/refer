@@ -5,6 +5,8 @@ import DashboardComponent from "./DashboardComponent";
 import { useInfluencerData } from "@/store";
 import { createInfluencer } from "../../appwrite/utils";
 import InfluencerDashComponent from "./InfluencerDashboard/InfluencerDashComponent";
+import Spline from "@splinetool/react-spline";
+import Script from "next/script";
 
 function InfluencerSetup3() {
   const [choose, setChoose] = useState(true);
@@ -21,7 +23,7 @@ function InfluencerSetup3() {
   return (
     <>
       <div
-        className={`w-[90%] flex justify-center items-center gap-10 my-10 ${
+        className={`w-[90%] flex justify-center items-center gap-10 my-6 ${
           choose ? "flex" : "hidden"
         } `}
       >
@@ -82,14 +84,15 @@ function InfluencerSetup3() {
             </button>
           </div>
         </div>
-        <div className="w-[50%] rounded-2xl bg-[#15A145] flex justify-center items-center">
-          <Image
+        <div className="w-[50%] h-[90vh] top-[3%] sticky rounded-2xl bg-black flex justify-center items-center">
+          {/* <Image
             src="/User.svg"
             width="252"
             height="300"
             className="w-[75%]"
             alt="Ref3r logo"
-          />
+          /> */}
+          <Spline scene="https://prod.spline.design/2rLQrhjlogSapElU/scene.splinecode" />
         </div>
       </div>
       {choose ? "" : <InfluencerDashComponent />}

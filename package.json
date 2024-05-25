@@ -16,6 +16,8 @@
     "@dynamic-labs/wagmi-connector": "^1.4.4",
     "@metamask/providers": "^16.1.0",
     "@shopify/shopify-api": "^10.0.0",
+    "@splinetool/react-spline": "^2.2.6",
+    "@splinetool/runtime": "^1.4.0",
     "@zerodev/sdk": "^4.0.0",
     "appwrite": "^14.0.1",
     "dns": "^0.2.2",

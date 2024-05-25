@@ -6,6 +6,8 @@ import InfluencerSetup2 from "./InfluencerSetup2";
 import { useInfluencerData } from "@/store";
 import { useDynamicContext } from "@/lib/dynamic";
 import appwriteService from "@/appwrite/config";
+import Spline from "@splinetool/react-spline";
+import Script from "next/script";
 
 function InfluencerSetup1() {
   const [choose, setChoose] = useState(true);
@@ -111,14 +113,15 @@ function InfluencerSetup1() {
           </div>
         </div>
 
-        <div className="w-[50%] h-[94vh] top-[3%] sticky rounded-2xl bg-[#15A145] flex justify-center items-center">
-          <Image
+        <div className="w-[50%] h-[94vh] top-[3%] sticky rounded-2xl bg-black flex justify-center items-center">
+          {/* <Image
             src="/User.svg"
             width="252"
             height="300"
             className="w-[100%] max-h-[85vh]"
             alt="Ref3r logo"
-          />
+          /> */}
+          <Spline scene="https://prod.spline.design/2rLQrhjlogSapElU/scene.splinecode" />
         </div>
       </div>
       {choose ? "" : <InfluencerSetup2 />}

@@ -5,6 +5,8 @@ import DashboardComponent from "./DashboardComponent";
 import Dashboard from "@/app/dashboard/page";
 import { useBrandData } from "@/store";
 import { createBrand } from "../../appwrite/utils";
+import Spline from "@splinetool/react-spline";
+import Script from "next/script";
 
 function BrandSetup3() {
   const [choose, setChoose] = useState(true);
@@ -23,7 +25,7 @@ function BrandSetup3() {
   return (
     <>
       <div
-        className={`w-[90%] flex justify-center items-center gap-10 my-10 ${
+        className={`w-[90%] flex justify-center items-center gap-10 my-6 ${
           choose ? "flex" : "hidden"
         } `}
       >
@@ -83,14 +85,15 @@ function BrandSetup3() {
             </button>
           </div>
         </div>
-        <div className="w-[50%] rounded-2xl bg-[#15A145] flex justify-center items-center">
-          <Image
+        <div className="w-[50%] h-[90vh] top-[3%] sticky rounded-2xl bg-black flex justify-center items-center">
+          {/* <Image
             src="/Spaceship.svg"
             width="252"
             height="300"
             className="w-[70%]"
             alt="Ref3r logo"
-          />
+          /> */}
+          <Spline scene="https://prod.spline.design/wcIrbxSDkSMSlT-h/scene.splinecode" />
         </div>
       </div>
       {choose ? "" : <DashboardComponent />}

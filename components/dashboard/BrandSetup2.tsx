@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import BrandSetup3 from "./BrandSetup3";
 import { useBrandData } from "@/store";
+import Spline from "@splinetool/react-spline";
+import Script from "next/script";
 
 function BrandSetup2() {
   const [choose, setChoose] = useState(true);
@@ -278,14 +280,15 @@ function BrandSetup2() {
           </div>
         </div>
 
-        <div className="w-[50%] h-[94vh] top-[3%] sticky rounded-2xl bg-[#15A145] flex justify-center items-center">
-          <Image
+        <div className="w-[50%] h-[94vh] top-[3%] sticky rounded-2xl bg-black flex justify-center items-center">
+          {/* <Image
             src="/Spaceship.svg"
             width="252"
             height="300"
             className="w-[70%]"
             alt="Ref3r logo"
-          />
+          /> */}
+          <Spline scene="https://prod.spline.design/wcIrbxSDkSMSlT-h/scene.splinecode" />
         </div>
       </div>
       {choose ? "" : <BrandSetup3 />}
