@@ -96,6 +96,16 @@ function DashHomeInf() {
                 <p>Top Selling Product</p>
                 <p>View all products &#62;</p>
               </div>
+              <div className="flex gap-4 flex-wrap text-center">
+                <p className="text-white font-semibold text-3xl">No Products Yet...</p>
+              </div>
+            </div>
+
+            <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
+              <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
+                <p>Top Selling Product</p>
+                <p>View all products &#62;</p>
+              </div>
               <div className="flex gap-4 flex-wrap">
                 <CardsInfProductForBrands
                   image={"Product1.svg"}

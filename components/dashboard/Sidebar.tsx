@@ -3,13 +3,23 @@ import SidebarItems from "./SidebarItems";
 import Link from "next/link";
 import { useBrandData, useIsInfluencer } from "@/store";
 import { useState } from "react";
+import Image from "next/image";
 
 const Sidebar = (props: any) => {
   const isInfluencer = useIsInfluencer.getState().isInfluencer;
   return (
     <div id="sidebar" className="bg-[#111111] h-[94vh] sticky top-[3%] mx-5">
       <div className="flex flex-col justify-around">
-        <div className="text-white px-4 relative">
+        <div className="text-white px-4 pt-4 relative">
+          <Link href="/">
+            <Image
+              src="/icons/Arrow.svg"
+              width="100"
+              height="100"
+              className="w-[20%] rounded-full bg-[#00B24F] px-2 py-3 mb-4 rotate-180 flex justify-start"
+              alt="Ref3r logo"
+            />
+          </Link>
           <span
             onClick={() => props.setActivePage("DashHomePage")}
             className="cursor-pointer"
