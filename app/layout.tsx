@@ -9,6 +9,7 @@ import {
   ZeroDevSmartWalletConnectors,
   DynamicWagmiConnector,
 } from "../lib/dynamic";
+import AuthProvider from "@/components/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<AuthProvider>
       <body className={inter.className}>
         <DynamicContextProvider
           settings={{
@@ -34,6 +36,7 @@ export default function RootLayout({
           <DynamicWagmiConnector>{children}</DynamicWagmiConnector>
         </DynamicContextProvider>
       </body>
+      </AuthProvider>
     </html>
   );
 }

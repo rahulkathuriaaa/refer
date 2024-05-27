@@ -2,13 +2,16 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import BrandSetup3 from "./BrandSetup3";
 import { useBrandData } from "@/store";
 import Spline from "@splinetool/react-spline";
 import Script from "next/script";
-
+import Link from "next/link";
+import { useSession } from "next-auth/react"
+import { option } from "@/app/api/auth/[...nextauth]/option";
 function BrandSetup2() {
+  const { data: session, status } = useSession()
+
   const [choose, setChoose] = useState(true);
   const [links, setLinks] = useState([]);
   const handleLinkChange = (index, value) => {
@@ -34,10 +37,17 @@ function BrandSetup2() {
         className={`w-[90%] justify-center gap-10 ${
           choose ? "flex" : "hidden"
         } `}
-      >
+        >
+   
         <div className="w-[50%] text-white flex flex-col gap-4 my-10">
           <p className="text-3xl font-semibold">Connect Your Social</p>
-
+          {session ? (<>
+                <Link href="/api/auth/signout?callbackUrl=/dashboard">Logout</Link>
+                <h1 style={{ color: "white", zIndex: "30" }}>{session.user.username}</h1>
+              </>
+              ) : (
+                <Link href="/api/auth/signin">Login</Link>
+              )}
           <div className="ml-2 flex flex-col gap-4">
             <div className="flex flex-col gap-4 overflow-auto h-[70vh]">
               <div className="flex flex-col gap-3 w-[80%] bg-[#27292D] rounded-xl p-4">
