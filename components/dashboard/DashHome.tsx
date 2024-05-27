@@ -152,6 +152,7 @@ const DashHome = () => {
         setUserDescription(useBrandData.getState().description);
         setCurrentUserDocumentId(useBrandData.getState().documentId);
         setProfileImg(useBrandData.getState().profile_img);
+        console.log("brand links are",splitString(useBrandData.getState().links))
         setUserLinks(splitString(useBrandData.getState().links));
       }
       if (userType == "influencer") {
@@ -259,7 +260,7 @@ const DashHome = () => {
                     alt="home fill"
                   />
                 </a>
-                <a href={userLinks[2]} target="blank">
+                <a href={userLinks[3]} target="blank">
                   <Image
                     src={`/icons/twitter.svg`}
                     width="25"

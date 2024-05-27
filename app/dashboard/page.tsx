@@ -6,6 +6,8 @@ import Image from "next/image";
 import BrandSetup1 from "@/components/dashboard/BrandSetup1";
 import InfluencerSetup1 from "@/components/dashboard/InfluencerSetup1";
 import DashboardComponent from "@/components/dashboard/DashboardComponent";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useBrandData, useInfluencerData, usePublicKey } from "@/store";
 import {
   createUser,
@@ -19,6 +21,7 @@ import { useDynamicContext } from "@/lib/dynamic";
 function Dashboard() {
   const { user, isAuthenticated } = useDynamicContext();
   const key = user?.email;
+  const router = useRouter();
 
   const [choose, setChoose] = useState(true);
   const [brand, setBrand] = useState(false);
@@ -84,8 +87,8 @@ function Dashboard() {
                 <div className="flex w-[50%] justify-center items-center gap-[20%]">
                   <div
                     onClick={() => {
-                      setBrand(true);
-                      setChoose(false);
+                      router.push("./dashboard/signup/brandSetup1");
+                      // setChoose(false);
                     }}
                     className="flex flex-col md:py-8 py-8 border-[2px] border-transparent hover:border-[#00B24F] rounded-2xl items-center gap-2 bg-[#2D2D2D] w-full cursor-pointer"
                   >
@@ -107,8 +110,7 @@ function Dashboard() {
                   </div>
                   <div
                     onClick={() => {
-                      setInfluencer(true);
-                      setChoose(false);
+                      router.push("./dashboard/signup/infsetup1");
                     }}
                     className="flex flex-col md:py-8 py-8 border-[2px] border-transparent hover:border-[#00B24F] rounded-2xl items-center gap-2 bg-[#2D2D2D] w-full cursor-pointer"
                   >
