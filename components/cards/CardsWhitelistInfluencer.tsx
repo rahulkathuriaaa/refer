@@ -126,7 +126,7 @@ const CardsWhitelistInfluencer = ({
       console.log("error getting if whitelisted", error);
     }
   };
-  setInterval(isWhitelisted, 5000);
+  setInterval(isWhitelisted, 10000);
 
   // const isEligibleToClaim = async () => {
   //   const provider = await getProvider();

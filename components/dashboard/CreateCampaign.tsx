@@ -33,7 +33,7 @@ import {
   referFactoryContractAbi,
 } from "@/ethers/contractConfig";
 
-function CreateCampaign() {
+function CreateCampaign({ toggleCreate, create }) {
   const [campaignName, setCampaignName] = useState("");
   const [campaignDesc, setCampaignDesc] = useState("");
   const [campaignTerm, setCampaignTerm] = useState(0);
@@ -301,7 +301,11 @@ function CreateCampaign() {
 
           <button
             onClick={async () => {
+             
               const res = await createCampaignContract();
+              if (res) {
+                toggleCreate();
+              }
               console.log(res);
             }}
             className="py-3 bg-[#00B24F] text-white text-sm text-center w-[35%] rounded-lg cursor-pointer"

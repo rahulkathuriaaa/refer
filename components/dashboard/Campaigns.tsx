@@ -307,6 +307,9 @@ const Campaigns = () => {
     console.log(res1);
     console.log(res2);
   };
+  const toggleCreate = () => {
+    setCreate(!create);
+  };
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -324,6 +327,9 @@ const Campaigns = () => {
     };
     //readFromContract();
     fetchCampaigns();
+    const intervalId = setInterval(fetchCampaigns, 2000); 
+
+    return () => clearInterval(intervalId); 
   }, []);
 
   return (
@@ -350,7 +356,7 @@ const Campaigns = () => {
             <button
               className="py-2 px-3 bg-[#00B24F] text-white text-sm rounded-lg cursor-pointer"
               onClick={() => {
-                setCreate(false);
+                toggleCreate();
               }}
             >
               Create Campaign
@@ -394,7 +400,11 @@ const Campaigns = () => {
         )}
       </div>
 
-      {create ? "" : <CreateCampaign />}
+      {create ? (
+        ""
+      ) : (
+        <CreateCampaign toggleCreate={toggleCreate} create={create} />
+      )}
 
       {/* comment out line 62 to see View Campaign & Chat UI */}
       {/* <ViewCampaign /> */}
