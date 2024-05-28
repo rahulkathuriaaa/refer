@@ -279,7 +279,7 @@ const Campaigns = () => {
           walletAddress, // Convert the amount to wei
         ],
       });
-     // console.log(Number(String(data)));
+      // console.log(Number(String(data)));
       return Number(String(data));
     } catch (error) {
       console.log("error minting refer tokens", error);
@@ -327,9 +327,9 @@ const Campaigns = () => {
     };
     //readFromContract();
     fetchCampaigns();
-    const intervalId = setInterval(fetchCampaigns, 2000); 
+    const intervalId = setInterval(fetchCampaigns, 2000);
 
-    return () => clearInterval(intervalId); 
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -392,9 +392,12 @@ const Campaigns = () => {
         {allCampaigns && (
           <div className="w-[85%]">
             {choose ? (
-              <PastCampaigns />
+              !isInfluencer && <PastCampaigns />
             ) : (
-              <ActiveCampaigns referTokenBalance={referTokenBalance} campaigns={allCampaigns} />
+              <ActiveCampaigns
+                referTokenBalance={referTokenBalance}
+                campaigns={allCampaigns}
+              />
             )}
           </div>
         )}

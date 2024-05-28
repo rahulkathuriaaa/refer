@@ -10,6 +10,7 @@ import ReferalCode from "@/components/dashboard/ReferalCode";
 import GenCode from "../dashboard/GenCode";
 import GetCode from "../dashboard/GetCode";
 import ClaimTokens from "@/components/dashboard/ClaimTokens";
+import appwriteService from "@/appwrite/config";
 
 import {
   counterContractAbi,
@@ -20,7 +21,6 @@ import {
   referFactoryContractAbi,
   campaignContractAbi,
 } from "@/ethers/contractConfig";
-import appwriteService from "@/appwrite/config";
 
 const CardsActiveCampaigns = ({
   address,
@@ -47,6 +47,7 @@ const CardsActiveCampaigns = ({
   const [allBrands, setAllBrands] = useState();
   const [allInfluencers, setAllInfluencers] = useState();
   const [alreadyGeneratedCode, setAlreadyGeneratedCode] = useState();
+  const [websiteUrl, setWebsiteUrl] = useState("");
   const [isInfluencerEligibleToClaim, setIsInfluencerEligibleToClaim] =
     useState(false);
 
@@ -158,6 +159,16 @@ const CardsActiveCampaigns = ({
     setAllInfluencers(allInfluencers);
     console.log(allInfluencers?.documents);
   }
+  const websiteUrlFromPublicKey = async () => {
+    const res = await appwriteService.getBrandWebStoreKey(address);
+
+    //console.log(res);
+    //console.log(res.documents[0].website);
+    const data = res.documents[0].website;
+
+    console.log("web store data test", data);
+    return data;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -173,6 +184,8 @@ const CardsActiveCampaigns = ({
         hasAlreadyGeneratedCode
       );
       setAlreadyGeneratedCode(hasAlreadyGeneratedCode);
+      const websiteUrl = await websiteUrlFromPublicKey();
+      setWebsiteUrl(websiteUrl);
     };
 
     fetchData();
@@ -192,6 +205,17 @@ const CardsActiveCampaigns = ({
 
         <div className="w-[85%]">
           <p className="text-sm">{campaigndesc}</p>
+
+          <p className="text-sm">
+            Brand Store :{" "}
+            <a
+              href={`https:\\${websiteUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {websiteUrl}
+            </a>
+          </p>
         </div>
 
         {/* <div>

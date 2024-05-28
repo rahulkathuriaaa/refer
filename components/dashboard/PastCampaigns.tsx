@@ -6,23 +6,9 @@ function PastCampaigns() {
     <div className="flex flex-col gap-4">
       <CardsPastCampaigns
         campaign="Campaign 1"
-        campaigndesc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident consequatur maxime magnam, ipsum, voluptates odit iusto autem quod, dolorum voluptate sunt suscipit dolor. Maxime, facilis."
+        campaigndesc="some descripton"
         number={"30"}
-        balance={"20"}
-        total={"200"}
-      />
-      <CardsPastCampaigns
-        campaign="Campaign 2"
-        campaigndesc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident consequatur maxime magnam, ipsum, voluptates odit iusto autem quod, dolorum voluptate sunt suscipit dolor. Maxime, facilis."
-        number={"50"}
-        balance={"20"}
-        total={"200"}
-      />
-      <CardsPastCampaigns
-        campaign="Campaign 3"
-        campaigndesc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident consequatur maxime magnam, ipsum, voluptates odit iusto autem quod, dolorum voluptate sunt suscipit dolor. Maxime, facilis."
-        number={"40"}
-        balance={"20"}
+        balance={"200"}
         total={"200"}
       />
     </div>

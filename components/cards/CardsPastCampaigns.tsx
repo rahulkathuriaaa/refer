@@ -33,9 +33,9 @@ const CardsPastCampaigns = ({
           <p className="text-sm">{campaigndesc}</p>
         </div>
 
-        <div>
+        {/* <div>
           <p className="text-sm">{number} influencers</p>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center justify-between px-8 text-sm w-full py-3 text-white bg-black rounded-b-xl">
@@ -49,17 +49,17 @@ const CardsPastCampaigns = ({
           </div>
         </div>
         <div>
-          <button
+          {/* <button
             className={`text-[#27E0A6]`}
             onClick={() => {
               setView(false);
             }}
           >
             View Campaign
-          </button>
+          </button> */}
         </div>
       </div>
-      {view ? "" : <ViewCampaign />}
+      {/* {view ? "" : <ViewCampaign />} */}
     </div>
   );
 };
