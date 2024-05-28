@@ -55,6 +55,7 @@ export async function POST(req) {
         discount.discountCode.toLowerCase() === targetDiscountCode.toLowerCase()
     );
     if (foundDiscount) {
+      console.log("code and usage ",foundDiscount.discountCode,foundDiscount.usageCount)
       return NextResponse.json(
         {
           message: "Discount code found",

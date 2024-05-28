@@ -209,7 +209,7 @@ export async function getDiscountCodeUpdate(
       console.log("An error occurred while creating the discount code.");
     }
   } catch (error) {
-    console.error("Error creating discount code:", error);
+    console.error("Error getting discount code data :", error);
   }
 }
 export async function addToWhitelistEmails(email: type) {

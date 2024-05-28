@@ -279,7 +279,7 @@ const Campaigns = () => {
           walletAddress, // Convert the amount to wei
         ],
       });
-      console.log(Number(String(data)));
+     // console.log(Number(String(data)));
       return Number(String(data));
     } catch (error) {
       console.log("error minting refer tokens", error);
