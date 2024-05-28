@@ -5,6 +5,7 @@ import React from "react";
 import CardsInfluencersForBrands from "../cards/CardsInfluencersForBrands";
 import appwriteService from "@/appwrite/config";
 import Image from "next/image";
+import { useBrandData } from "@/store";
 
 function Influencers() {
   const [allInfluencers, setAllInfluencers] = useState();
@@ -12,7 +13,7 @@ function Influencers() {
   const fetchAllInfluencers = async () => {
     const allInfluencers = await appwriteService.getAllInfluencers();
     setAllInfluencers(allInfluencers?.documents);
-    console.log(allInfluencers);
+    console.log(allInfluencers?.documents[0].$collectionId);
   };
   useEffect(() => {
     fetchAllInfluencers();
@@ -53,6 +54,9 @@ function Influencers() {
             name={e.name}
             description={e.bio}
             followers={e.follower_count}
+            currentUserDocumentId={useBrandData.getState().documentId}
+            cardDocumentId={e.$id}
+            cardUserKey={e.key}
           />
         ))}
       </div>

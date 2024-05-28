@@ -5,6 +5,7 @@ import React from "react";
 import CardsBrandsForInfluencers from "../cards/CardsBrandsForInfluencers";
 import appwriteService from "@/appwrite/config";
 import Image from "next/image";
+import { useInfluencerData } from "@/store";
 
 function Brands() {
   const [allBrands, setAllBrands] = useState();
@@ -50,6 +51,9 @@ function Brands() {
             image={e.profile_img}
             name={e.name}
             description={e.description}
+            currentUserDocumentId={useInfluencerData.getState().documentId}
+            cardDocumentId={e.$id}
+            cardUserKey={e.key}
           />
         ))}
       </div>
