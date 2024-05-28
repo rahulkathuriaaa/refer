@@ -30,6 +30,7 @@ const CardsActiveCampaigns = ({
   // number,
   balance,
   total,
+  referTokenBalance,
 }: {
   address: string;
   contractAddress: string;
@@ -175,7 +176,7 @@ const CardsActiveCampaigns = ({
     };
 
     fetchData();
-  }, []);
+  }, [referTokenBalance]);
   return (
     <div className="w-full">
       <div className="w-full flex flex-col gap-2 p-4 text-white bg-[#00B24F] rounded-t-xl">
@@ -216,6 +217,7 @@ const CardsActiveCampaigns = ({
               address={address}
               codee={alreadyGeneratedCode}
               campaignAddress={contractAddress}
+              referTokenBalance={referTokenBalance}
             ></ClaimTokens>
           ) : (
             <></>

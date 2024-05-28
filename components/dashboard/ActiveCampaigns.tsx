@@ -3,12 +3,12 @@
 import React from "react";
 import CardsActiveCampaigns from "../cards/CardsActiveCampaigns";
 
-function ActiveCampaigns(campaigns: any) {
-  console.log("the campaign address",campaigns.campaigns);
+function ActiveCampaigns({ campaigns, referTokenBalance }) {
+  console.log("the campaign address", campaigns.campaigns);
 
   return (
     <div className="flex flex-col gap-4">
-      {campaigns.campaigns.map((campaign, index) => (
+      {campaigns.map((campaign, index) => (
         <CardsActiveCampaigns
           key={index}
           address={campaign._host}
@@ -18,6 +18,7 @@ function ActiveCampaigns(campaigns: any) {
           // number={"30"}
           balance={"20"}
           total={"200"}
+          referTokenBalance={referTokenBalance}
         />
       ))}
       ;

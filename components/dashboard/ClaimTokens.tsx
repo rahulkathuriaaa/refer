@@ -9,7 +9,12 @@ import { campaignContractAbi } from "@/ethers/contractConfig";
 import { getDiscountCodeUpdate } from "../../utils";
 import appwriteService from "@/appwrite/config";
 
-const ClaimTokens = ({ address, codee, campaignAddress }) => {
+const ClaimTokens = ({
+  address,
+  codee,
+  campaignAddress,
+  referTokenBalance,
+}) => {
   const [codeUsageCount, setCodeUsageCount] = useState();
   const [code, setCode] = useState();
   const [referalsAlreadyClaimed, setReferalsAlreadyClaimed] = useState();
@@ -164,7 +169,7 @@ const ClaimTokens = ({ address, codee, campaignAddress }) => {
     };
 
     fetchData();
-  }, []);
+  }, [referTokenBalance]);
 
   return (
     <div className="">

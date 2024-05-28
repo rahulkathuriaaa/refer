@@ -394,7 +394,7 @@ const Campaigns = () => {
             {choose ? (
               <PastCampaigns />
             ) : (
-              <ActiveCampaigns campaigns={allCampaigns} />
+              <ActiveCampaigns referTokenBalance={referTokenBalance} campaigns={allCampaigns} />
             )}
           </div>
         )}
