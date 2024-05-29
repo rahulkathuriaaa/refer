@@ -9,6 +9,7 @@ import CardsProductForBrands from "../cards/CardsProductForBrands";
 import { checkUserType } from "@/appwrite/utils";
 import appwriteService from "@/appwrite/config";
 import { useBrandProducts } from "@/hooks/useBrandProducts";
+import { useFetchBrandProducts } from "@/hooks/useFetchBrandProducts";
 import {
   useBrandData,
   useInfluencerData,
@@ -20,6 +21,41 @@ import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 const TopSellingProducts = () => {
   const { storeUrl, products } = useBrandProducts();
+  const [isProductsLoaded, setIsProductsLoaded] = useState(false);
+  const [productArray, setProductArray] = useState([]);
+  useEffect(() => {
+    if (products) {
+      setIsProductsLoaded(true);
+      setProductArray(products.products);
+    }
+  }, [products]);
+  return (
+    <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
+      <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
+        <p>Top Selling Product</p>
+        <p>View all products &#62;</p>
+      </div>
+      <div className="flex gap-4 flex-wrap">
+        {isProductsLoaded ? (
+          productArray.map((e) => (
+            <CardsProductForBrands
+              key={e.handle}
+              image={e.image.src}
+              name={e.title}
+              link={"https://" + storeUrl + "/products/" + e.handle}
+            />
+          ))
+        ) : (
+          <></>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const ProductsFromBrands = () => {
+
+  const { storeUrl, products } = useFetchBrandProducts();
   const [isProductsLoaded, setIsProductsLoaded] = useState(false);
   const [productArray, setProductArray] = useState([]);
   useEffect(() => {
@@ -297,23 +333,7 @@ const DashHome = () => {
               </div>
             </div>
 
-            {!isInfluencer ? (
-              <TopSellingProducts />
-            ) : (
-              <>
-                <div className="bg-[#111111] p-6 flex flex-col rounded-lg w-full gap-20">
-                  <div className="flex justify-between items-center bg-[#232528] text-white py-2 px-8 rounded-full">
-                    <p>Top Selling Product</p>
-                    <p>View all products &#62;</p>
-                  </div>
-                  <div className="flex gap-4 flex-wrap text-center">
-                    <p className="text-white font-semibold text-3xl">
-                      No Products Yet...
-                    </p>
-                  </div>
-                </div>
-              </>
-            )}
+            {!isInfluencer ? <TopSellingProducts /> : <ProductsFromBrands />}
           </div>
 
           <div className="w-[25%] h-full">
