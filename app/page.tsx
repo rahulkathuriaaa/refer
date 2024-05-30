@@ -11,6 +11,7 @@ import appwriteService from "@/appwrite/config";
 import { usePublicKey } from "@/store";
 import Footer from "@/components/landing/Footer";
 import JoinWaitlistPop from "@/components/landing/JoinWaitlistPop";
+
 export default function Home() {
   /* const session = await getServerSession(option); */
   return (
@@ -19,7 +20,6 @@ export default function Home() {
         className="bg-cover bg-center w-full h-full"
         style={{ backgroundImage: "url('/hero-bg.svg')" }}
       >
-        
         <LandingNavbar />
 
         <Hero />
@@ -42,7 +42,7 @@ export default function Home() {
       <div className="w-full">
         <Footer />
       </div>
-      {/*    <JoinWaitlistPop /> */}
+      <JoinWaitlistPop />
     </main>
   );
 }
