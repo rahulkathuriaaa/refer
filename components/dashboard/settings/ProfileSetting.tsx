@@ -160,7 +160,7 @@ function ProfileSetting() {
       </div> */}
       <div className="gap-4 flex ">
         <button
-          className="bg-[#00B24F] p-4 text-xl text-white rounded-xl min-w-[15%]"
+          className="bg-[#00B24F] p-3 text-lg font-semibold text-white rounded-xl min-w-[15%]"
           onClick={async() => {
             useBrandData.setState({
               name: newName,
@@ -176,6 +176,9 @@ function ProfileSetting() {
           }}
         >
           Save Changes
+        </button>
+        <button className="p-3 text-lg font-semibold hover:text-white rounded-xl min-w-[15%] bg-white hover:bg-red-700 ">
+          LOGOUT
         </button>
       </div>
       <ToastContainer></ToastContainer>{" "}
