@@ -10,6 +10,7 @@ import Spline from "@splinetool/react-spline";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 
+
 function BrandSetup1() {
   const router = useRouter();
   const [choose, setChoose] = useState(true);
@@ -157,8 +158,9 @@ function BrandSetup1() {
               </div>
               <button
                 className="bg-[#00B24F] px-4 py-2 text-[0.8rem] text-white rounded-2xl md:rounded-lg w-[30%]"
-                onClick={() => {
+                onClick={async () => {
                   updateStore();
+                  
                   router.push("./brandSetup1/brandsetup2");
                 }}
               >

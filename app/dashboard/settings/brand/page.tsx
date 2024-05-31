@@ -8,7 +8,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+
 function BrandSettings() {
+
   const [activePage, setActivePage] = useState("ProfilePage");
   return (
     <Layout>

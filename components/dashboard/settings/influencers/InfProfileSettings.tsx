@@ -1,14 +1,19 @@
 // @ts-nocheck
 "use client";
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useInfluencerData } from "@/store";
 import { updateInfluencerData } from "@/appwrite/utils";
 import appwriteService from "@/appwrite/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 function InfProfileSettings() {
+  const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
+    useDynamicContext();
+  const router = useRouter();
   const [choose, setChoose] = useState(true);
   const [newName, setNewName] = useState(useInfluencerData.getState().name);
   const [newBio, setNewBio] = useState(useInfluencerData.getState().bio);
@@ -19,6 +24,12 @@ function InfProfileSettings() {
   const [newProfileImg, setNewProfileImg] = useState(
     useInfluencerData.getState().profile_img
   );
+  const settingsLogout = async () => {
+    handleLogOut();
+    const res = await appwriteService.logout();
+    console.log(res);
+    return true;
+  };
 
   const fileInputRef = useRef(null);
   const showToastMessage = () => {
@@ -297,6 +308,17 @@ function InfProfileSettings() {
           className="bg-[#00B24F] py-2 px-1 text-white rounded-xl min-w-[15%]"
         >
           Save Changes
+        </button>
+        <button
+          onClick={() => {
+            const res = settingsLogout();
+            if (res) {
+              router.push("/");
+            }
+          }}
+          className="p-3 text-lg font-semibold hover:text-white rounded-xl min-w-[15%] bg-white hover:bg-red-700 "
+        >
+          LOGOUT
         </button>
       </div>
       <ToastContainer></ToastContainer>{" "}

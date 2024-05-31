@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { option } from "@/app/api/auth/[...nextauth]/option";
 import { useRouter } from "next/navigation";
-import { updateBrandData } from "@/appwrite/utils";
+
 function BrandSetup2() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -33,7 +33,7 @@ function BrandSetup2() {
     console.log(String(links));
 
     updateStore();
-    updateBrandData();
+    
     router.push("./brandsetup2/brandsetup3");
     setChoose(false);
   };

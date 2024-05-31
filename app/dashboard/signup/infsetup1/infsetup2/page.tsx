@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 
-import { updateInfluencerData } from "@/appwrite/utils";
+
 
 function InfluencerSetup2() {
   const router = useRouter();
@@ -32,7 +32,7 @@ function InfluencerSetup2() {
   const handleContinue = () => {
     console.log(String(links));
     updateStore();
-    updateInfluencerData();
+   
     setChoose(false);
     router.push("./infsetup2/infsetup3");
   };
