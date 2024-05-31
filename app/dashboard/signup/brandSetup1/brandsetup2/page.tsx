@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 //import BrandSetup3 from "./BrandSetup3";
 import { useBrandData } from "@/store";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { option } from "@/app/api/auth/[...nextauth]/option";
 import { useRouter } from "next/navigation";
+import { updateBrandData } from "@/appwrite/utils";
 function BrandSetup2() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -32,6 +33,7 @@ function BrandSetup2() {
     console.log(String(links));
 
     updateStore();
+    updateBrandData();
     router.push("./brandsetup2/brandsetup3");
     setChoose(false);
   };
