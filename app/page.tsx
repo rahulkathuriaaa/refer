@@ -11,6 +11,7 @@ import appwriteService from "@/appwrite/config";
 import { usePublicKey } from "@/store";
 import Footer from "@/components/landing/Footer";
 import JoinWaitlistPop from "@/components/landing/JoinWaitlistPop";
+import LoadingModal from "@/components/landing/LoadingModal";
 
 export default function Home() {
   /* const session = await getServerSession(option); */
@@ -43,6 +44,7 @@ export default function Home() {
         <Footer />
       </div>
       <JoinWaitlistPop />
+     
     </main>
   );
 }

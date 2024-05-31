@@ -22,6 +22,7 @@ import {
 } from "@/store";
 import { useUserActions } from "@/hooks/useUserActions";
 import appwriteService from "@/appwrite/config";
+import LoadingModal from "./LoadingModal";
 
 function LandingNavbar() {
   const [Toggle, setToggle] = useState(true);
@@ -80,6 +81,7 @@ function LandingNavbar() {
     if (isAuthenticated) {
       // console.log("user payload data", user?.email);
       console.log("user objh");
+
       // console.log(user?.verifiedCredentials[1].address);
       usePublicKey.setState({ publicKey: user?.email });
       const key = usePublicKey.getState().publicKey;
@@ -93,7 +95,7 @@ function LandingNavbar() {
         console.log(setup);
         if (user) {
           setAuthenticatedForDashboard(true);
-          //router.push("/dashboard");
+          router.push("/dashboard");
         }
       };
 
@@ -372,6 +374,7 @@ function LandingNavbar() {
           </div>
         </div>
       </nav>
+      <LoadingModal visible={isAuthenticated}></LoadingModal>
     </div>
   );
 }
