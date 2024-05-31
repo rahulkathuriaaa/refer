@@ -12,9 +12,12 @@ import { usePublicKey } from "@/store";
 import Footer from "@/components/landing/Footer";
 import JoinWaitlistPop from "@/components/landing/JoinWaitlistPop";
 import LoadingModal from "@/components/landing/LoadingModal";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 export default function Home() {
   /* const session = await getServerSession(option); */
+  const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
+    useDynamicContext();
   return (
     <main className="bg-[#111111] flex min-h-screen flex-col items-center justify-between">
       <div
@@ -43,8 +46,7 @@ export default function Home() {
       <div className="w-full">
         <Footer />
       </div>
-      <JoinWaitlistPop />
-     
+      {!isAuthenticated && <JoinWaitlistPop />}
     </main>
   );
 }
