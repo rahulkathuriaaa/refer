@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 //import BrandSetup3 from "./BrandSetup3";
-import { useBrandData } from "@/store";
+import { useBrandData, usePublicKey } from "@/store";
 import Spline from "@splinetool/react-spline";
 import Script from "next/script";
 import Link from "next/link";
@@ -24,16 +24,24 @@ function BrandSetup2() {
   };
 
   function updateStore() {
+    const storedBrandData = JSON.parse(localStorage.getItem("brandData"));
+    console.log(storedBrandData);
+    usePublicKey.setState(storedBrandData.key);
     useBrandData.setState({
+      ...storedBrandData,
       links: String(links),
     });
-    console.log("store Updated 2");
+
+    localStorage.removeItem("brandData");
+    console.log(
+      "Store updated with data from local storage and current component, local storage cleared"
+    );
   }
   const handleContinue = () => {
     console.log(String(links));
 
     updateStore();
-    
+
     router.push("./brandsetup2/brandsetup3");
     setChoose(false);
   };

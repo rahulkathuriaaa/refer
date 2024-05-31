@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import { useInfluencerData } from "@/store";
+import { useInfluencerData, usePublicKey } from "@/store";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { createInfluencer } from "@/appwrite/utils";
 
 import Spline from "@splinetool/react-spline";
@@ -10,12 +11,15 @@ import { useRouter } from "next/navigation";
 import Script from "next/script";
 
 function InfluencerSetup3() {
+  const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
+    useDynamicContext();
   const router = useRouter();
   const [choose, setChoose] = useState(true);
   const [niche, setNiche] = useState<string>();
   const [mainPlatform, setMainPlatform] = useState<string>();
   const [noOfFollowers, setNumberOfFollowers] = useState<string>();
   function updateStore() {
+    usePublicKey.setState({ publicKey: user?.email });
     useInfluencerData.setState({
       niche: niche,
       main_platform: mainPlatform,

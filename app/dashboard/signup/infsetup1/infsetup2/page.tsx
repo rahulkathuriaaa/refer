@@ -10,8 +10,6 @@ import { useSession } from "next-auth/react";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 
-
-
 function InfluencerSetup2() {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -24,15 +22,18 @@ function InfluencerSetup2() {
   };
 
   function updateStore() {
+    const storedInfluencerData = JSON.parse(
+      localStorage.getItem("influencerData")
+    );
     useInfluencerData.setState({
+      ...storedInfluencerData,
       links: String(links),
     });
-    console.log("store Updated 2");
   }
   const handleContinue = () => {
     console.log(String(links));
     updateStore();
-   
+
     setChoose(false);
     router.push("./infsetup2/infsetup3");
   };
@@ -69,7 +70,7 @@ function InfluencerSetup2() {
                     </div>
                     {session ? (
                       <>
-                        <Link href="/api/auth/signout?callbackUrl=/dashboard/signup/brandSetup1/brandsetup2">
+                        <Link href="/api/auth/signout?callbackUrl=/dashboard/signup/infsetup1/infsetup2">
                           Remove
                         </Link>
                         <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
@@ -77,7 +78,7 @@ function InfluencerSetup2() {
                         </button>
                       </>
                     ) : (
-                      <Link href="/api/auth/signin?callbackUrl=/dashboard/signup/brandSetup1/brandsetup2">
+                      <Link href="/api/auth/signin?callbackUrl=/dashboard/signup/infsetup1/infsetup2">
                         <button className="bg-[#00B24F] px-4 py-2 text-white rounded-2xl w-[30%]">
                           Authorise
                         </button>

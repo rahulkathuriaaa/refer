@@ -22,12 +22,14 @@ function InfluencerSetup1() {
     useDynamicContext();
   const fileInputRef = useRef(null);
   function updateStore() {
-    useInfluencerData.setState({
+    const influencerData = {
       name: name,
       bio: bio,
       publicKey: user?.verifiedCredentials[0].address,
       profile_img: newProfileImg,
-    });
+    }
+    localStorage.setItem("influencerData", JSON.stringify(influencerData));
+    console.log("Local storage updated with influencerData");
   }
   const handleImageClick = () => {
     fileInputRef.current.click();

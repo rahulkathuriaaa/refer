@@ -10,7 +10,6 @@ import Spline from "@splinetool/react-spline";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 
-
 function BrandSetup1() {
   const router = useRouter();
   const [choose, setChoose] = useState(true);
@@ -26,7 +25,8 @@ function BrandSetup1() {
     useDynamicContext();
   const fileInputRef = useRef(null);
   function updateStore() {
-    useBrandData.setState({
+    const brandData = {
+      key: user?.email,
       name: brandName,
       description: brandDescription,
       website: brandWebsite,
@@ -34,8 +34,10 @@ function BrandSetup1() {
       business_reg_code: brandRegistrationCode,
       publicKey: user?.verifiedCredentials[0].address,
       profile_img: newProfileImg,
-    });
-    console.log("store Updated 1");
+    };
+
+    localStorage.setItem("brandData", JSON.stringify(brandData));
+    console.log("Local storage updated with brand data");
   }
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -160,7 +162,7 @@ function BrandSetup1() {
                 className="bg-[#00B24F] px-4 py-2 text-[0.8rem] text-white rounded-2xl md:rounded-lg w-[30%]"
                 onClick={async () => {
                   updateStore();
-                  
+
                   router.push("./brandSetup1/brandsetup2");
                 }}
               >

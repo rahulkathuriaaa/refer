@@ -7,9 +7,13 @@ import { useBrandData } from "@/store";
 import { createBrand } from "@/appwrite/utils";
 import Spline from "@splinetool/react-spline";
 import { useRouter } from "next/navigation";
+import { usePublicKey } from "@/store";
 import Script from "next/script";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 function BrandSetup3() {
+  const { user, isAuthenticated, setShowAuthFlow, handleLogOut } =
+    useDynamicContext();
   const router = useRouter();
   const [choose, setChoose] = useState(true);
   const [brandEcommercePlatform, setBrandEcommercePlatform] =
@@ -17,6 +21,7 @@ function BrandSetup3() {
   const [brandApiKey, setBrandApiKey] = useState<string>();
   const [brandIndustryCategory, setBrandIndustryCategory] = useState<string>();
   function updateStore() {
+    usePublicKey.setState({ publicKey: user?.email });
     useBrandData.setState({
       ecommerce_platform: brandEcommercePlatform,
       api_key: brandApiKey,
