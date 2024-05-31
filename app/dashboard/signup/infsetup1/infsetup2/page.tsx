@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
-import { useInfluencerData } from "@/store";
+
 import { updateInfluencerData } from "@/appwrite/utils";
 
 function InfluencerSetup2() {
