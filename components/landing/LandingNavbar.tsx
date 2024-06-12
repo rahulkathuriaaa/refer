@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -130,7 +130,7 @@ function LandingNavbar() {
 
         <div className="md:flex w-[90%] justify-evenly items-center hidden">
           <div className="flex gap-[2rem] justify-center items-center w-[80%]">
-            <Link href="/">
+            <Link href="#home">
               <p
                 onClick={sendMail}
                 className="hoverUnderline hover:text-[#00B24F]"
@@ -140,29 +140,28 @@ function LandingNavbar() {
             </Link>
 
             <Link
-              // target="_blank"
-              href="/"
+              href="#benefits"
             >
               <p className="hoverUnderline hover:text-[#00B24F]">Benefits</p>
             </Link>
 
-            <Link href="/">
+            <Link href="#offer">
               <p className="hoverUnderline hover:text-[#00B24F]">
                 What we offer
               </p>
             </Link>
 
-            <Link href="/">
+            <Link href="#howitwork">
               <p className="hoverUnderline hover:text-[#00B24F]">
                 How it works
               </p>
             </Link>
 
-            <Link href="/">
+            {/* <Link href="/">
               <p className="hoverUnderline hover:text-[#00B24F]">
                 Testimonials
               </p>
-            </Link>
+            </Link> */}
 
             <Link href="/support">
               <p className="hoverUnderline hover:text-[#00B24F]">Get Help</p>

@@ -1,10 +1,11 @@
 import React from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 function OfferSection() {
   return (
-    <div className="mt-10 mb-32 flex flex-col justify-center items-center">
+    <section id="offer" className="mt-10 mb-32 flex flex-col justify-center items-center">
       <div className="py-2 px-4 bg-[#61BC8463] rounded-3xl text-sm text-white font-semibold mb-20">
         What we offer
       </div>
@@ -113,7 +114,7 @@ function OfferSection() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

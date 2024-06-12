@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import FeatureAffiliate from "./FeatureAffiliate";
 import FeatureBrand from "./FeatureBrand";
 
@@ -7,7 +7,7 @@ function FeaturesSection() {
   const [choose, setChoose] = useState(false);
 
   return (
-    <div className="mt-10 mb-2 flex flex-col justify-center items-center">
+    <section id="benefits" className="mt-10 mb-2 flex flex-col justify-center items-center">
       <div className="py-2 px-4 bg-[#61BC8463] rounded-3xl text-sm text-white font-semibold mb-10">
         Benefits
       </div>
@@ -46,7 +46,7 @@ function FeaturesSection() {
           />
         </svg>
       </div>
-    </div>
+    </section>
   );
 }
 

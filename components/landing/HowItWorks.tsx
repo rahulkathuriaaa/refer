@@ -9,7 +9,7 @@ function HowItWorks() {
   const [choose, setChoose] = useState(false);
 
   return (
-    <div className="mt-10 mb-2 flex flex-col justify-center items-center">
+    <section id="howitwork" className="mt-10 mb-2 flex flex-col justify-center items-center">
       <div className="py-2 px-4 bg-[#61BC8463] rounded-3xl text-sm text-white font-semibold">
         How It Works
       </div>
@@ -50,7 +50,7 @@ function HowItWorks() {
           />
         </svg>
       </div>
-    </div>
+    </section>
   );
 }
 

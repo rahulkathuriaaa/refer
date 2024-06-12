@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function Hero() {
   return (
-    <div>
+    <section id="home">
       <div className="absolute z-0 w-full hidden md:flex flex-col justify-center items-center top-[50%] xl:top-[25%] gap-8">
         <div className="flex justify-between w-[70%]">
           <Image
@@ -105,7 +105,7 @@ function Hero() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
