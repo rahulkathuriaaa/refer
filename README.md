@@ -1,7 +1,3 @@
-Here's a GitHub README in the correct format for the Ref3R project:
-
----
-
 # Ref3R
 
 Ref3R is a cutting-edge platform connecting influencers and brands, facilitating seamless collaborations through automated commission processes and streamlined sponsorships.
