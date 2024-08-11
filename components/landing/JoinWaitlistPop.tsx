@@ -33,9 +33,9 @@ const JoinWaitlistPop = () => {
             <h2 className="text-center text-white text-2xl md:text-5xl font-bold md:w-[75%]">
               Get Early Access and be entitled for Pioneer Bonus.
             </h2>
-            <p className="text-center text-white md:text-xl font-light md:w-[75%]">
+{/*             <p className="text-center text-white md:text-xl font-light md:w-[75%]">
               Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et.
-            </p>
+            </p> */}
             <input
               type="email"
               name="joinwaitlist"
