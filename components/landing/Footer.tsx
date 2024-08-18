@@ -6,7 +6,7 @@ function Footer() {
     <div className="bg-[#058E41] flex justify-center items-center w-full py-12 text-white">
       <div className="w-[85%] flex flex-col gap-8">
         <div className="flex justify-between flex-col sm:flex-row gap-6 sm:gap-3">
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <h3 className="text-xl font-semibold">Product</h3>
             <div className="text-sm text-[#C0E3CF] flex flex-col gap-2">
               <p>Employee Database</p>
@@ -16,7 +16,7 @@ function Footer() {
               <p>Shift planner</p>
               <p>Recruiting</p>
             </div>
-          </div>
+          </div> */}
           <div className="flex flex-col gap-2">
             <h3 className="text-xl font-semibold">Information</h3>
             <div className="text-sm text-[#C0E3CF] flex flex-col gap-2">
@@ -29,9 +29,9 @@ function Footer() {
             <h3 className="text-xl font-semibold">Company</h3>
             <div className="text-sm text-[#C0E3CF] flex flex-col gap-2">
               <p>About Us</p>
-              <p>Careers</p>
+              {/* <p>Careers</p> */}
               <p>Contact Us</p>
-              <p>Lift Media</p>
+              {/* <p>Lift Media</p> */}
             </div>
           </div>
           <div className="bg-[#1E9954] subscribe-bg py-4 px-10 flex flex-col gap-3 rounded-2xl sm:w-[30%]">
@@ -54,11 +54,11 @@ function Footer() {
                 />
               </div>
             </div>
-            <p className="text-[0.75rem]">
+            {/* <p className="text-[0.75rem]">
               Hello, we are Lift Media. Our goal is to translate the positive
               effects from revolutionizing how companies engage with their
               clients & their team.
-            </p>
+            </p> */}
           </div>
         </div>
 

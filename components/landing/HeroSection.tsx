@@ -75,10 +75,10 @@ function Hero() {
           <div className="flex justify-center items-center bg-[#2D2D2D] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:p-8">
             <div className="text-white w-[65%] text-center">
               <p className="md:text-[1.5rem] font-bold">For Reference</p>
-              <p className="text-[0.5rem] text-[#909090] md:text-xs font-bold">
+              {/* <p className="text-[0.5rem] text-[#909090] md:text-xs font-bold">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
-              </p>
+              </p> */}
             </div>
 
             {/* <Link className="" href="/dashboard">
@@ -91,10 +91,10 @@ function Hero() {
           <div className="flex justify-center items-center bg-[#2D2D2D] md:bg-[#058E41] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:py-14">
             <div className="text-white text-center w-[65%]">
               <p className="md:text-[1.5rem] font-bold">For Brands</p>
-              <p className="text-[0.5rem] md:text-xs font-semibold text-[#909090] md:text-white">
+              {/* <p className="text-[0.5rem] md:text-xs font-semibold text-[#909090] md:text-white">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
-              </p>
+              </p> */}
             </div>
 
             {/* <Link className="" href="/dashboard">
