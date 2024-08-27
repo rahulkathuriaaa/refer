@@ -151,11 +151,11 @@ function LandingNavbar() {
               </p>
             </Link>
 
-            <Link href="#howitwork">
+            <a href="https://medium.com/@kishenmaran06/collaborative-marketing-the-new-era-of-modern-marketing-57ac2b1843f7">
               <p className="hoverUnderline hover:text-[#00B24F]">
-                How it works
+                Blogs
               </p>
-            </Link>
+            </a>
 
             {/* <Link href="/">
               <p className="hoverUnderline hover:text-[#00B24F]">
