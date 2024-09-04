@@ -71,7 +71,7 @@ function Hero() {
         </p>
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-[85%] md:w-[75%] justify-center items-center md:items-end mt-20 mb-20 md:mb-10">
-          <div className="flex justify-center items-center bg-[#2D2D2D] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:p-8">
+          <div className="flex justify-center items-center bg-[#2D2D2D] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:p-8 hover:md:p-14 hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
             <div className="text-white w-[65%] text-center">
               <p className="md:text-[1.5rem] font-bold">For Influencers</p>
               {/* <p className="text-[0.5rem] text-[#909090] md:text-xs font-bold">
@@ -87,7 +87,8 @@ function Hero() {
             </Link> */}
           </div>
 
-          <div className="flex justify-center items-center bg-[#2D2D2D] md:bg-[#058E41] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:py-14">
+          {/* <div className="flex justify-center items-center bg-[#2D2D2D] md:bg-[#058E41] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:py-14"> */}
+          <div className="flex justify-center items-center bg-[#058E41] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:p-8 hover:md:p-14 hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
             <div className="text-white text-center w-[65%]">
               <p className="md:text-[1.5rem] font-bold">For Brands</p>
               {/* <p className="text-[0.5rem] md:text-xs font-semibold text-[#909090] md:text-white">
