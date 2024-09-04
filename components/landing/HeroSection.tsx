@@ -67,8 +67,7 @@ function Hero() {
           and brands for seamless collaborations
         </p>
         <p className="text-white font-semibold mt-10 md:text-xl w-[60%] md:w-[45%] text-center">
-          Our unique platform features automate commissions and streamline
-          influencer sponsorship.
+        Redefining Collaborative Marketing
         </p>
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-[85%] md:w-[75%] justify-center items-center md:items-end mt-20 mb-20 md:mb-10">
