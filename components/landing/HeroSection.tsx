@@ -74,7 +74,7 @@ function Hero() {
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 w-[85%] md:w-[75%] justify-center items-center md:items-end mt-20 mb-20 md:mb-10">
           <div className="flex justify-center items-center bg-[#2D2D2D] md:w-[50%] rounded-3xl md:rounded-2xl p-5 md:p-8">
             <div className="text-white w-[65%] text-center">
-              <p className="md:text-[1.5rem] font-bold">For Reference</p>
+              <p className="md:text-[1.5rem] font-bold">For Influencers</p>
               {/* <p className="text-[0.5rem] text-[#909090] md:text-xs font-bold">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
